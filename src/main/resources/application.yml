@@ -10,7 +10,10 @@ spring:
             additional-paths: src/main/java
             enabled: true
     datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
+        driver-class-name: 'com.mysql.cj.jdbc.Driver'
         username: 'root'
-        password: '8848'
-        url: 'jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false'
+        password: '8848xc8848'
+        url: 'jdbc:mysql://124.221.237.233:3306/forkluogu?serverTimezone=UTC'
+logging:
+    file:
+        name: log

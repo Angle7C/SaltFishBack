@@ -1,0 +1,22 @@
+package com.application.aspect;
+
+import com.application.constant.enums.ErrorEnum;
+import com.application.model.ResultJson;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+@Component
+@Slf4j
+public class ExecptionHandler {
+    private  static  final Logger log= LoggerFactory.getLogger("异常抓取");
+    @ExceptionHandler(Throwable.class)
+    public ResultJson unkown(Throwable throwable){
+        log.error("出现异常：{} 异常原因；{} 异常地点：{}",throwable.getMessage(),throwable.getCause(),throwable.getStackTrace()[0]);
+        return new ResultJson(ErrorEnum.UNKNOW_ERROR);
+    };
+}

@@ -18,7 +18,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.application.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.application.model.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -31,12 +31,11 @@
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-
-        <table tableName="user" domainObjectName="User"></table>
-        <table tableName="orders" domainObjectName="Orders"></table>
-        <table tableName="message" domainObjectName="Message"></table>
-        <table tableName="goods" domainObjectName="Goods"></table>
-        <table tableName="shopcar" domainObjectName="shopCar"></table>
+        <table tableName="user" domainObjectName="User" ></table>
+        <table tableName="problem" domainObjectName="Problem"></table>
+        <table tableName="comment" domainObjectName="Comment"></table>
+        <table tableName="record" domainObjectName="Record"></table>
+<!--        <table tableName="shopcar" domainObjectName="shopCar"></table>-->
 <!--        <table tableName="ad" domainObjectName="Ad"></table>-->
     </context>
 </generatorConfiguration>
