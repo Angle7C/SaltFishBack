@@ -5,7 +5,8 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorEnum {
-    UNKNOW_ERROR(1000L,"未知错误");
+    UNKNOW_ERROR(2000L,"未知错误"),
+    ARGUMENT_ERROR(2001L,"校验参数异常");
     private Long code;
     private String message;
     ErrorEnum(Long code,String message){

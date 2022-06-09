@@ -17,9 +17,11 @@ import java.util.Arrays;
 @Aspect
 public class ServiceLog {
     private static  final Logger logger= LoggerFactory.getLogger("服务层访问入口日志");
-    @Pointcut("execution( public * com.application.service.*.*(..))")
-    public void point(){}
 
+    @Pointcut("execution( public * com.application.service.*.*(..))")
+    public void point(){
+
+    }
     @Before("point()")
     public void entry(JoinPoint joinPoint){
         Signature signature = joinPoint.getSignature();

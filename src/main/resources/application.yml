@@ -12,8 +12,8 @@ spring:
     datasource:
         driver-class-name: 'com.mysql.cj.jdbc.Driver'
         username: 'root'
-        password: '8848xc8848'
-        url: 'jdbc:mysql://124.221.237.233:3306/forkluogu?serverTimezone=UTC'
+        password: '8848'
+        url: 'jdbc:mysql://localhost:3306/forkluogu?serverTimezone=UTC'
 logging:
     file:
         name: log
