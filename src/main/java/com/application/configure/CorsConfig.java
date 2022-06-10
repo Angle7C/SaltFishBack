@@ -17,10 +17,12 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:80","http://localhost:8080","https://gitee.com")
+                .allowedOrigins("http://172.23.160.105:8080")
                 .allowCredentials(true)
                 .allowedMethods(ORIGINS)
                 .exposedHeaders("**")
                 .maxAge(3600);
+
+        System.out.println("wthhhhhhhhhhhhhhhhhh");
     }
 }
