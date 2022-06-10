@@ -27,8 +27,8 @@ public class UserDTO {
     public UserDTO(User user){
         this.name=user.getUserName();
         this.passWord=null;
-        this.avatarUrl=getAvatarUrl();
-        this.ranks=getRanks();
-        this.ID=getID();
+        this.avatarUrl=user.getImageUrl();
+        this.ranks=user.getRanks();
+        this.ID=user.getId();
     }
 }

@@ -31,21 +31,20 @@ public class UserController {
                 break;
             }
         }
-
         Assert.notNull(value, "没有携带userToken");
         User user=userService.checkUser(value);
         Assert.notNull(user,  "没有这个用户");
         json.ok("成功登录了",new UserDTO(user));
         return json;
     }
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public ResultJson logout(HttpServletRequest request, HttpServletResponse response){
         Cookie[] cookies = request.getCookies();
         request.getSession().invalidate();
         String value=null;
         Assert.notNull(cookies,"没有携带Cookie");
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")) {
+            if (cookie.getName().equals("userToken")) {
                 value = cookie.getValue();
                 break;
             }
