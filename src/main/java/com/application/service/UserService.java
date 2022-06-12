@@ -5,7 +5,6 @@ import cn.hutool.core.lang.UUID;
 import com.application.mapper.UserMapper;
 import com.application.model.entity.User;
 import com.application.model.entity.UserExample;
-import com.application.utils.RedisUtils;
 import com.application.utils.UserTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
