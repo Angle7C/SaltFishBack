@@ -1,16 +1,21 @@
 package com.application.controller;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.digest.MD5;
+import cn.hutool.extra.mail.MailUtil;
 import com.application.model.DTO.UserDTO;
 import com.application.model.ResultJson;
 import com.application.model.entity.User;
 import com.application.service.UserService;
+import com.application.utils.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class UserController {
@@ -66,8 +71,18 @@ public class UserController {
         json.ok("登录成功");
         return  json;
     }
-    @PostMapping("/register")
-    public ResultJson register(@RequestBody UserDTO userDTO){
+    @GetMapping("/getcode/{email}")
+    public ResultJson generateCode(@PathVariable String email, HttpSession session){
+        ResultJson json=new ResultJson();
+        String code = EmailUtil.setEmailCode("2501741939@qq.com", "测试");
+        session.setAttribute("code", MD5.create().digest(code,"UTF-8"));
+        json.ok("发送验证码成功",code);
+        return json;
+    }
+    @PostMapping("/register/{code}")
+    public ResultJson register(@RequestBody UserDTO userDTO,@PathVariable String code,HttpSession session){
+        String myCode = (String) session.getAttribute("code");
+        Assert.isTrue(code.equals(myCode),"验证码错误");
         User user = userDTO.toEntity();
         user = userService.create(user);
         ResultJson json=new ResultJson();
