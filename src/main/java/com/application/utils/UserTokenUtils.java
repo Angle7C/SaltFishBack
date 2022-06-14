@@ -12,13 +12,14 @@ import java.util.stream.Collectors;
 
 public class UserTokenUtils {
     private static Set<String> tokenSession=new HashSet<>();
-    public  static boolean checkUser(@NotNull(message = "没有携带cookie") Cookie[] cookies){
+    public  static String checkUser( Cookie[] cookies){
+        Assert.notNull(cookies,"没有携带Cookie");
         List<Cookie> userToken = Arrays.stream(cookies)
                 .filter(item -> item.getName().equals("userToken"))
                 .collect(Collectors.toList());
         Assert.isTrue(userToken!=null||userToken.size()!=1,"携带userToken出错");
-        boolean contains = tokenSession.contains(userToken.get(0).getValue());
-        return contains;
+         tokenSession.contains(userToken.get(0).getValue());
+        return userToken.get(0).getValue();
     }
     public static boolean checkUser(@NotNull(message = "没有携带userToken")String token){
         boolean contains = tokenSession.contains(token);

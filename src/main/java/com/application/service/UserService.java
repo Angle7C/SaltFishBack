@@ -28,8 +28,10 @@ public class UserService {
     }
     @Transactional
     public int Update(User user){
-        Assert.isTrue(user.getId()!=null,"没有传输ID");
-        int i= userMapper.updateByPrimaryKey(user);
+        Assert.notNull(user.getWxId());
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andWxIdEqualTo(user.getWxId());
+        int i=userMapper.updateByExampleSelective(user, userExample);
         Assert.isTrue(i==1,"没有这个用户");
         return i;
     };

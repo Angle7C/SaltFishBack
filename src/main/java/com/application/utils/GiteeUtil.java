@@ -18,9 +18,16 @@ public class GiteeUtil {
     private static  final String owner="mousetrap/image";
     private static  final String URL="https://gitee.com/api/v5/repos/"+owner+"/contents/avatar/";
     private static  final JsonParser jsonParser=new JsonParser();
-    public static String  upload(String path, MultipartFile file) throws IOException {
-        String uploadURL = createUploadURL(path);
-        Map<String, Object> uploadBody = createUploadBody(file.getBytes());
+    public static String  upload(MultipartFile file)  {
+        String uploadURL = createUploadURL(file.getOriginalFilename());
+
+        Map<String, Object> uploadBody = null;
+        try {
+            uploadBody = createUploadBody(file.getBytes());
+        } catch (IOException e) {
+            LogUtil.error("文件上传失败, 异常信息：{}",e.getMessage());
+        }
+        Assert.notNull(uploadBody,"文件传输异常");
         String json = HttpUtil.post(uploadURL, uploadBody);
         return getAvatarUrl(json);
 
@@ -32,7 +39,7 @@ public class GiteeUtil {
 
     }
     public static String createUploadURL(String fileName){
-        String suffix = FileUtil.checkSuffis(fileName);
+        String suffix = FileUtil.checkSuffix(fileName);
         Assert.notNull(suffix,"不支持这个文件后缀,支持");
         return URL+UUID.randomUUID().toString()+suffix;
     }

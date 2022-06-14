@@ -4,6 +4,7 @@ import com.application.mapper.RecordMapper;
 import com.application.mapper.UserMapper;
 import com.application.model.entity.User;
 import com.application.utils.EmailUtil;
+import com.application.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class HelloController {
     public Object hello(){
         Long i=1L;
 //        int i1=1/0;
+        FileUtil.checkSuffix("test.png");
         return null;
     }
 }

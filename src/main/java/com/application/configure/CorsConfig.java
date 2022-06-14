@@ -22,7 +22,5 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods(ORIGINS)
                 .exposedHeaders("**")
                 .maxAge(3600);
-
-        System.out.println("wthhhhhhhhhhhhhhhhhh");
     }
 }

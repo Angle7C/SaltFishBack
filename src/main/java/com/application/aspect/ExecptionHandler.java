@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class ExecptionHandler {
     private  static  final Logger log= LoggerFactory.getLogger("异常抓取");
-    private  static  final ResultJson<String> json=new ResultJson<String>();
     @ExceptionHandler(Throwable.class)
     public ResultJson unkownHandle(Throwable throwable){
         ResultJson json=new ResultJson();
@@ -34,7 +33,7 @@ public class ExecptionHandler {
     public ResultJson mailHandle(MailException e){
         ResultJson json=new ResultJson();
         log.error("邮箱异常：{},出现异常:{}",e,e.getMessage());
-        json.error( 2002L,e.getMessage());
+        json.error( 2002L,"邮箱异常");
         return json;
     }
 }

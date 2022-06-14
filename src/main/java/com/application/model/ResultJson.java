@@ -19,13 +19,15 @@ public class ResultJson<T> {
         this.Code=errorEnum.getCode();
         this.message=errorEnum.getMessage();
     }
-    public void ok(String message){
-        ok(message,null);
+    public ResultJson ok(String message){
+        return ok(message,null);
     }
-    public void ok(String message,T data){ok(message,data,null);}
-    public void ok(String message,T data,List<T> list){ok(1000L,message,data,list);}
-    public void ok(Long code,String message,T data,List<T> list){
+    public ResultJson  ok(String message,T data){return ok(message,data,null);}
+    public ResultJson  ok(String message,T data,List<T> list){return ok(1000L,message,data,list);}
+    public ResultJson  ok(Long code,String message,T data,List<T> list){
         this.Code=code;this.message=message;this.data=data;this.list=list;
+        return this;
+
     }
     public void error(Long Code,String message){
         error(Code,message,null);

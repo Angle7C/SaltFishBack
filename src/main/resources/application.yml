@@ -10,7 +10,7 @@ mybatis:
 
 spring:
     profiles:
-        active: testlcoal
+        active: testlocal
     devtools:
         restart:
             additional-paths: src/main/java

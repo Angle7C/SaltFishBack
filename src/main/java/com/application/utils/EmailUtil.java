@@ -28,7 +28,7 @@ public class EmailUtil {
     public void init(){
         emailCode=code;
     }
-    public static String setEmailCode(String Email,String Title){
+    public static String sendEmailCode(String Email,String Title){
         String code = RandomUtil.randomString(6);
         logger.info("发送地址：{} 验证码：{}",Email,code);
         MailAccount account=new MailAccount();

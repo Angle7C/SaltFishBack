@@ -1,5 +1,6 @@
 package com.application.model.DTO;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.crypto.digest.MD5;
 import com.application.model.entity.User;
 import lombok.AllArgsConstructor;
@@ -14,21 +15,22 @@ public class UserDTO {
     private String passWord;
     private String avatarUrl;
     private Long ranks;
-    private Long ID;
+    private Long id;
     public User toEntity(){
         User user = new User();
         user.setRanks(ranks);
         user.setUserName(name);
         user.setImageUrl(avatarUrl);
         user.setPassWord(MD5.create().digestHex(passWord,"UTF-8"));
-        user.setId(ID);
+        user.setId(id);
         return user;
     }
     public UserDTO(User user){
+        Assert.notNull(user,"没有这个用户");
         this.name=user.getUserName();
         this.passWord=null;
         this.avatarUrl=user.getImageUrl();
         this.ranks=user.getRanks();
-        this.ID=user.getId();
+        this.id=user.getId();
     }
 }

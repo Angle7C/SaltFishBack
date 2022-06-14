@@ -1,5 +1,8 @@
 package com.application.model.entity;
 
+import lombok.Data;
+
+@Data
 public class User {
     private Long id;
 

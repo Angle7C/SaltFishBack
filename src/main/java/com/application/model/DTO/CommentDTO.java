@@ -16,16 +16,10 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CommentDTO {
     private Long id;
-    @NotNull(message = "问题ID为空")
     private Long problemId;
     private Long like;
-    @NotNull(message = "内容为空")
-    @Length(min=100,message = "内容最小长度为100")
     private String content;
-    @NotNull(message = "发送用户")
     private UserDTO user;
-    @Min(value = 0,message = "状态异常")
-    @Max(value = 10,message = "状态异常")
     private Integer type;
     public CommentDTO(Comment comment, User user){
         this.id=comment.getId();
@@ -37,7 +31,7 @@ public class CommentDTO {
     }
     public Comment toEntity(){
         Comment comment = new Comment();
-        comment.setUserId(this.user.getID());
+        comment.setUserId(this.user.getId());
         comment.setContent(this.content);
         comment.setId(this.id);
         comment.setProblemId(this.problemId);
