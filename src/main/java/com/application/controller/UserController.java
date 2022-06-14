@@ -79,7 +79,7 @@ public class UserController {
     @PostMapping("/getcode/{email}")
     public ResultJson generateCode(@PathVariable String email, HttpSession session){
         ResultJson json=new ResultJson();
-        String code = EmailUtil.sendEmailCode("2501741939@qq.com", "LouGu Code");
+        String code = EmailUtil.sendEmailCode(email, "LouGu Code");
         code =MD5.create().digestHex(code,"UTF-8");
         session.setAttribute("code", code);
         json.ok("发送验证码成功",code);
