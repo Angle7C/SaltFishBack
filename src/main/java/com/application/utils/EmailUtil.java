@@ -38,6 +38,7 @@ public class EmailUtil {
         account.setFrom("15305067103@163.com");
         account.setUser("15305067103@163.com");
         account.setPass(emailCode);
+        account.setConnectionTimeout(10*60);
         String send = MailUtil.send(account, Email, Title, code, false);
         logger.info("返回结果：{}",send);
         return code;

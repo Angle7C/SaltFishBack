@@ -2,9 +2,12 @@ package com.application.service;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.UUID;
+import com.application.mapper.RecordMapper;
 import com.application.mapper.UserMapper;
+import com.application.model.entity.RecordExample;
 import com.application.model.entity.User;
 import com.application.model.entity.UserExample;
+import com.application.utils.LogUtil;
 import com.application.utils.UserTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,8 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RecordMapper recordMapper;
     @Transactional
     public User create(User user){
         UserExample userExample=new UserExample();
@@ -66,5 +71,16 @@ public class UserService {
         userMapper.updateByPrimaryKey(user);
         UserTokenUtils.addToken(user.getWxId());
         return s;
+    }
+    //删除这个用户，并删除这个用户做题记录，
+    public User delete(Long id){
+        User user = userMapper.selectByPrimaryKey(id);
+        Assert.notNull(user,"没有这个用户");
+        RecordExample recordExample=new RecordExample();
+        recordExample.createCriteria().andUserIdEqualTo(id);
+        int i=recordMapper.deleteByExample(recordExample);
+        LogUtil.info("删除了用户:{} 影响了:{}条record记录",user,i);
+        userMapper.deleteByPrimaryKey(id);
+        return user;
     }
 }

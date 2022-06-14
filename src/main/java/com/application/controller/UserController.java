@@ -26,10 +26,8 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     private UserService userService;
-
-    //使用Cooike来检查登录状态
     @GetMapping("/checkuser")
-    public ResultJson checkLogin(HttpServletRequest request, HttpServletResponse response) {
+    public ResultJson checkLogin(HttpServletRequest request) {
         ResultJson json = new ResultJson<>();
         String value = null;
         //携带了token
@@ -67,6 +65,13 @@ public class UserController {
     @PostMapping("/login")
     public ResultJson login(HttpServletRequest request, HttpServletResponse response, @RequestBody UserDTO userDTO){
         User user = userDTO.toEntity();
+        if(userDTO.getName().equals("Admin")&&userDTO.getPassWord().equals("Admin")){
+            Cookie cookie=new Cookie("userToken","Admin");
+            cookie.setMaxAge(60*60);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            return new ResultJson().ok("管理员登录成功");
+        }
         String token = userService.logIn(user);
         Cookie cookie=new Cookie("userToken",token);
         cookie.setMaxAge(60*60*24);
@@ -112,5 +117,20 @@ public class UserController {
         json.ok("更新用户数据成功",new UserDTO(user));
         return json;
     }
+    @DeleteMapping("/user/{id}")
+    public ResultJson delUser(@PathVariable("id") Long id,HttpServletRequest request){
+        String str = UserTokenUtils.checkUser(request.getCookies());
+        Assert.isTrue(str.equals("Admin"),"管理员未登录");
+        User user=userService.delete(id);
+        return new ResultJson().ok("删除成功");
+    }
+    @PutMapping("/user")
+    public ResultJson addUser(@RequestBody UserDTO userDTO,HttpServletRequest request){
+        String token = UserTokenUtils.checkUser(request.getCookies());
+        Assert.isTrue(token.equals("Admin"),"管理员未登录");
+        User user = userService.create(userDTO.toEntity());
+        return new ResultJson<>().ok("添加一个新用户成功",user);
+    }
+
 
 }

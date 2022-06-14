@@ -20,6 +20,7 @@ public class HelloController {
         Long i=1L;
 //        int i1=1/0;
         FileUtil.checkSuffix("test.png");
+        userMapper.selectByPrimaryKey(2L);
         return null;
     }
 }
