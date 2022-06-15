@@ -36,6 +36,7 @@ public class OtherService {
             }
         }else{
             sign= SignUtil.getSign(i,new Date());
+            sign.setId(user.getId());
             signMapper.insert(sign);
         }
         return sign;
