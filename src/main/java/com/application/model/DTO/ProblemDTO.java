@@ -45,6 +45,16 @@ public class ProblemDTO {
         tag=toTag(problem.getTag());
         level=problem.getLevel();
     }
+    public ProblemDTO(Problem problem){
+        id=problem.getId();
+        userDTO=null;
+        title=problem.getTitle();
+        int i = problem.getDescription().indexOf("#");
+        int j=problem.getDescription().indexOf("##");
+        description=problem.getDescription().substring(i,j);
+        tag=toTag(problem.getTag());
+        level=problem.getLevel();
+    }
     public static Long changTag(List<String> tag){
         Long sum=0L;
         for (String s : tag) {
@@ -63,4 +73,5 @@ public class ProblemDTO {
     public static void addTag(String tag){
         list.add(tag);
     }
+
 }

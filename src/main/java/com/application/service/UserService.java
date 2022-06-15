@@ -83,4 +83,12 @@ public class UserService {
         userMapper.deleteByPrimaryKey(id);
         return user;
     }
+
+    public User getUser(String token) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andWxIdEqualTo(token);
+        List<User> users = userMapper.selectByExample(userExample);
+        Assert.isTrue(users!=null&&users.size()==1,"没有这个用户");
+        return users.get(0);
+    }
 }

@@ -61,7 +61,7 @@ public class ProblemController {
         PageInfo<Problem> pageInfo = problemService.allList(pageSize,pageIndex);
         List<Problem> list = pageInfo.getList();
         List<ProblemDTO> collect = list.stream()
-                .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId()) ))
+                .map(item -> new ProblemDTO(item))
                 .collect(Collectors.toList());
         ResultJson json=new ResultJson();
         return  json.ok("查询成功",
