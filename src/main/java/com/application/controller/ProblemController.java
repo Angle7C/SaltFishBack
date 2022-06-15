@@ -68,4 +68,9 @@ public class ProblemController {
                 new Page(pageInfo.getTotal(),pageInfo.getPageSize(),pageInfo.getPageNum()),
                 collect);
     }
+    @GetMapping("/problem/{id}")
+    public ResultJson getProblem(@PathVariable("id") Long id){
+        ProblemDTO problem=problemService.getProblem(id);
+        return new ResultJson().ok("查询成功",problem);
+    }
 }

@@ -5,6 +5,7 @@ import com.application.mapper.ProblemMapper;
 import com.application.mapper.RecordMapper;
 import com.application.mapper.UserMapper;
 import com.application.model.DTO.ProblemDTO;
+import com.application.model.DTO.UserDTO;
 import com.application.model.entity.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -63,6 +64,13 @@ public class ProblemService {
         User user=userMapper.selectByPrimaryKey(problem.getUserId());
         Assert.notNull(user,"没有上传者");
         problemMapper.deleteByPrimaryKey(id);
+        return new ProblemDTO(problem,user);
+    }
+
+    public ProblemDTO getProblem(Long id) {
+        Problem problem = problemMapper.selectByPrimaryKey(id);
+        Assert.notNull(problem,"没有这个问题");
+        User user = userMapper.selectByPrimaryKey(problem.getUserId());
         return new ProblemDTO(problem,user);
     }
 }

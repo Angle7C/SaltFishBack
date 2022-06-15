@@ -25,7 +25,6 @@ public class ProblemDTO {
         list.add("bfs");
         list.add("递归");
         list.add("二叉树");
-
     }
     public Problem toEntity(){
         Problem problem=new Problem();
@@ -49,9 +48,7 @@ public class ProblemDTO {
         id=problem.getId();
         userDTO=null;
         title=problem.getTitle();
-        int i = problem.getDescription().indexOf("#");
-        int j=problem.getDescription().indexOf("##");
-        description=problem.getDescription().substring(i,j);
+        description=null;
         tag=toTag(problem.getTag());
         level=problem.getLevel();
     }
