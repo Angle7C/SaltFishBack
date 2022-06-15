@@ -1,5 +1,5 @@
 
-host: "smtp.yeah.net"
+host: "smtp.163.net"
 port: 25
 from: 15305067103@163.com
 pass: "HDOBGLXJAHUYXDZD"
@@ -23,3 +23,5 @@ spring:
 logging:
     file:
         name: logs/log
+    level:
+        com.application.mapper: DEBUG

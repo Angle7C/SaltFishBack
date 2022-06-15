@@ -78,7 +78,7 @@ public class UserController {
         cookie.setPath("/");
         response.addCookie(cookie);
         ResultJson json=new ResultJson();
-        json.ok("登录成功");
+        json.ok("登录成功",new UserDTO(user));
         return  json;
     }
     @PostMapping("/getcode/{email}")
@@ -130,6 +130,13 @@ public class UserController {
         Assert.isTrue(token.equals("Admin"),"管理员未登录");
         User user = userService.create(userDTO.toEntity());
         return new ResultJson<>().ok("添加一个新用户成功",user);
+    }
+    @GetMapping("/getuser")
+    public ResultJson getUserMessage(HttpServletRequest request){
+        String token=UserTokenUtils.checkUser(request.getCookies());
+        Assert.notNull(token,"未登录");
+        User user=userService.getUser(token);
+        return new ResultJson().ok("查询成功",new UserDTO(user));
     }
 
 
