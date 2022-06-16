@@ -3,10 +3,8 @@ package com.application.mapper;
 import com.application.model.entity.Comment;
 import com.application.model.entity.CommentExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface CommentMapper {
     int countByExample(CommentExample example);
 
