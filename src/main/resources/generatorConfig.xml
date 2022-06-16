@@ -36,11 +36,11 @@
                              targetProject="src/main/java" >
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-<!--        <table tableName="user" domainObjectName="User" ></table>-->
+        <table tableName="user" domainObjectName="User" ></table>
         <table tableName="problem" domainObjectName="Problem"></table>
-<!--        <table tableName="comment" domainObjectName="Comment"></table>-->
-<!--        <table tableName="record" domainObjectName="Record"></table>-->
-<!--        <table tableName="sign" domainObjectName="Sign"  ></table>-->
+        <table tableName="comment" domainObjectName="Comment"></table>
+        <table tableName="record" domainObjectName="Record"></table>
+        <table tableName="sign" domainObjectName="Sign"  ></table>
 <!--        <table tableName="ad" domainObjectName="Ad"></table>-->
     </context>
 </generatorConfiguration>

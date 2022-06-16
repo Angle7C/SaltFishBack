@@ -125,11 +125,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.application.model.entity.Comment" useGeneratedKeys="true" keyProperty="id">
-    insert into comment ( gmt_create, gmt_modified,
+  <insert id="insert" parameterType="com.application.model.entity.Comment" >
+    insert into comment (id, gmt_create, gmt_modified, 
       problem_id, likess, user_id, 
       type, content)
-    values ( #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT},
+    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
       #{problemId,jdbcType=BIGINT}, #{likess,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
       #{type,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
