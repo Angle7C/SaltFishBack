@@ -22,7 +22,7 @@ public class Comment {
 
     private Integer type;
 
-    private String context;
+    private String content;
 
     public Long getId() {
         return id;
@@ -80,11 +80,11 @@ public class Comment {
         this.type = type;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

@@ -25,14 +25,14 @@ public class CommentDTO {
         this.id=comment.getId();
         this.problemId=comment.getProblemId();
         this.like=comment.getLikess();
-        this.content=comment.getContext();
+        this.content=comment.getContent();
         this.user=new UserDTO(user);
         this.type= comment.getType();
     }
     public Comment toEntity(){
         Comment comment = new Comment();
         comment.setUserId(this.user.getId());
-        comment.setContext(this.content);
+        comment.setContent(this.content);
         comment.setId(this.id);
         comment.setProblemId(this.problemId);
         comment.setLikess(this.like);

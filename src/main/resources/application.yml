@@ -10,7 +10,7 @@ mybatis:
 
 spring:
     profiles:
-        active: '@active@'
+        active: 'testlocal'
     devtools:
         restart:
             additional-paths: src/main/java

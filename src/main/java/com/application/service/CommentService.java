@@ -65,11 +65,8 @@ public class CommentService {
     public PageInfo<CommentDTO> allList(Integer pageIndex, Integer pageSize,Long id){
         PageHelper.startPage(pageIndex,pageSize);
         CommentExample commentExample=new CommentExample();
-
         commentExample.createCriteria().andProblemIdEqualTo(id);
-
-        List<Comment> comments = commentMapper.selectByExample(commentExample);
-
+        List<Comment> comments = commentMapper.selectByExampleWithBLOBs(commentExample);
         List<CommentDTO> collect = comments.stream()
                 .map(item -> new CommentDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
                 .collect(Collectors.toList());

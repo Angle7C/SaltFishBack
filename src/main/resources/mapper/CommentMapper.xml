@@ -9,9 +9,10 @@
     <result column="likess" property="likess" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="INTEGER" />
-  </resultMap>
+<!--    <result column="content" property="content" javaType="LONGVARCHAR"></result>-->
+   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.application.model.entity.Comment" extends="BaseResultMap" >
-    <result column="context" property="context" jdbcType="LONGVARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -75,7 +76,7 @@
     id, gmt_create, gmt_modified, problem_id, likess, user_id, type
   </sql>
   <sql id="Blob_Column_List" >
-    context
+    content
   </sql>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.application.model.entity.CommentExample" >
     select
@@ -128,10 +129,10 @@
   <insert id="insert" parameterType="com.application.model.entity.Comment" >
     insert into comment (id, gmt_create, gmt_modified, 
       problem_id, likess, user_id, 
-      type, context)
+      type, content)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
       #{problemId,jdbcType=BIGINT}, #{likess,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
-      #{type,jdbcType=INTEGER}, #{context,jdbcType=LONGVARCHAR})
+      #{type,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.application.model.entity.Comment" >
     insert into comment
@@ -157,8 +158,8 @@
       <if test="type != null" >
         type,
       </if>
-      <if test="context != null" >
-        context,
+      <if test="content != null" >
+        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -183,8 +184,8 @@
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="context != null" >
-        #{context,jdbcType=LONGVARCHAR},
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -218,8 +219,8 @@
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
       </if>
-      <if test="record.context != null" >
-        context = #{record.context,jdbcType=LONGVARCHAR},
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -235,7 +236,7 @@
       likess = #{record.likess,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       type = #{record.type,jdbcType=INTEGER},
-      context = #{record.context,jdbcType=LONGVARCHAR}
+      content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,8 +275,8 @@
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="context != null" >
-        context = #{context,jdbcType=LONGVARCHAR},
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -288,7 +289,7 @@
       likess = #{likess,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=BIGINT},
       type = #{type,jdbcType=INTEGER},
-      context = #{context,jdbcType=LONGVARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.application.model.entity.Comment" >
