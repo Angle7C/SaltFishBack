@@ -107,7 +107,7 @@ public class UserController {
     public ResultJson update( UserDTO userDTO,HttpServletRequest request,@RequestParam(value = "file",required = false) MultipartFile multipartFile){
         String token = UserTokenUtils.checkUser(request.getCookies());
         User user = userDTO.toEntity();
-        user.setWxId(token);
+        user.setToken(token);
         String avatarUrl = GiteeUtil.upload(multipartFile);
         LogUtil.debug("传输用户数据：{}",user);
         LogUtil.debug("文件名称: {}",multipartFile.getOriginalFilename());

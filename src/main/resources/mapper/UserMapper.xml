@@ -8,9 +8,10 @@
     <result column="decription" property="decription" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="pass_word" property="passWord" jdbcType="VARCHAR" />
-    <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
     <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
     <result column="ranks" property="ranks" jdbcType="BIGINT" />
+    <result column="wx_id" property="wxId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_create, gmt_modified, decription, user_name, pass_word, wx_id, image_url, 
-    ranks
+    id, gmt_create, gmt_modified, decription, user_name, pass_word, token, image_url, 
+    ranks, wx_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.application.model.entity.UserExample" >
     select
@@ -107,12 +108,12 @@
   <insert id="insert" parameterType="com.application.model.entity.User" >
     insert into user (id, gmt_create, gmt_modified, 
       decription, user_name, pass_word, 
-      wx_id, image_url, ranks
-      )
+      token, image_url, ranks, 
+      wx_id)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
       #{decription,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
-      #{wxId,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{ranks,jdbcType=BIGINT}
-      )
+      #{token,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{ranks,jdbcType=BIGINT}, 
+      #{wxId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.application.model.entity.User" >
     insert into user
@@ -135,14 +136,17 @@
       <if test="passWord != null" >
         pass_word,
       </if>
-      <if test="wxId != null" >
-        wx_id,
+      <if test="token != null" >
+        token,
       </if>
       <if test="imageUrl != null" >
         image_url,
       </if>
       <if test="ranks != null" >
         ranks,
+      </if>
+      <if test="wxId != null" >
+        wx_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -164,14 +168,17 @@
       <if test="passWord != null" >
         #{passWord,jdbcType=VARCHAR},
       </if>
-      <if test="wxId != null" >
-        #{wxId,jdbcType=VARCHAR},
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
       </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=VARCHAR},
       </if>
       <if test="ranks != null" >
         #{ranks,jdbcType=BIGINT},
+      </if>
+      <if test="wxId != null" >
+        #{wxId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -202,14 +209,17 @@
       <if test="record.passWord != null" >
         pass_word = #{record.passWord,jdbcType=VARCHAR},
       </if>
-      <if test="record.wxId != null" >
-        wx_id = #{record.wxId,jdbcType=VARCHAR},
+      <if test="record.token != null" >
+        token = #{record.token,jdbcType=VARCHAR},
       </if>
       <if test="record.imageUrl != null" >
         image_url = #{record.imageUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.ranks != null" >
         ranks = #{record.ranks,jdbcType=BIGINT},
+      </if>
+      <if test="record.wxId != null" >
+        wx_id = #{record.wxId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -224,9 +234,10 @@
       decription = #{record.decription,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       pass_word = #{record.passWord,jdbcType=VARCHAR},
-      wx_id = #{record.wxId,jdbcType=VARCHAR},
+      token = #{record.token,jdbcType=VARCHAR},
       image_url = #{record.imageUrl,jdbcType=VARCHAR},
-      ranks = #{record.ranks,jdbcType=BIGINT}
+      ranks = #{record.ranks,jdbcType=BIGINT},
+      wx_id = #{record.wxId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -249,14 +260,17 @@
       <if test="passWord != null" >
         pass_word = #{passWord,jdbcType=VARCHAR},
       </if>
-      <if test="wxId != null" >
-        wx_id = #{wxId,jdbcType=VARCHAR},
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
       </if>
       <if test="imageUrl != null" >
         image_url = #{imageUrl,jdbcType=VARCHAR},
       </if>
       <if test="ranks != null" >
         ranks = #{ranks,jdbcType=BIGINT},
+      </if>
+      <if test="wxId != null" >
+        wx_id = #{wxId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -268,9 +282,10 @@
       decription = #{decription,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       pass_word = #{passWord,jdbcType=VARCHAR},
-      wx_id = #{wxId,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
       image_url = #{imageUrl,jdbcType=VARCHAR},
-      ranks = #{ranks,jdbcType=BIGINT}
+      ranks = #{ranks,jdbcType=BIGINT},
+      wx_id = #{wxId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

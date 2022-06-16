@@ -9,8 +9,7 @@
     <result column="likess" property="likess" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="INTEGER" />
-<!--    <result column="content" property="content" javaType="LONGVARCHAR"></result>-->
-   </resultMap>
+  </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.application.model.entity.Comment" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>

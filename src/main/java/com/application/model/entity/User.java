@@ -1,12 +1,5 @@
 package com.application.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
     private Long id;
 
@@ -20,11 +13,13 @@ public class User {
 
     private String passWord;
 
-    private String wxId;
+    private String token;
 
     private String imageUrl;
 
     private Long ranks;
+
+    private String wxId;
 
     public Long getId() {
         return id;
@@ -74,12 +69,12 @@ public class User {
         this.passWord = passWord == null ? null : passWord.trim();
     }
 
-    public String getWxId() {
-        return wxId;
+    public String getToken() {
+        return token;
     }
 
-    public void setWxId(String wxId) {
-        this.wxId = wxId == null ? null : wxId.trim();
+    public void setToken(String token) {
+        this.token = token == null ? null : token.trim();
     }
 
     public String getImageUrl() {
@@ -96,5 +91,13 @@ public class User {
 
     public void setRanks(Long ranks) {
         this.ranks = ranks;
+    }
+
+    public String getWxId() {
+        return wxId;
+    }
+
+    public void setWxId(String wxId) {
+        this.wxId = wxId == null ? null : wxId.trim();
     }
 }

@@ -494,73 +494,73 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andWxIdIsNull() {
-            addCriterion("wx_id is null");
+        public Criteria andTokenIsNull() {
+            addCriterion("token is null");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdIsNotNull() {
-            addCriterion("wx_id is not null");
+        public Criteria andTokenIsNotNull() {
+            addCriterion("token is not null");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdEqualTo(String value) {
-            addCriterion("wx_id =", value, "wxId");
+        public Criteria andTokenEqualTo(String value) {
+            addCriterion("token =", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdNotEqualTo(String value) {
-            addCriterion("wx_id <>", value, "wxId");
+        public Criteria andTokenNotEqualTo(String value) {
+            addCriterion("token <>", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdGreaterThan(String value) {
-            addCriterion("wx_id >", value, "wxId");
+        public Criteria andTokenGreaterThan(String value) {
+            addCriterion("token >", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdGreaterThanOrEqualTo(String value) {
-            addCriterion("wx_id >=", value, "wxId");
+        public Criteria andTokenGreaterThanOrEqualTo(String value) {
+            addCriterion("token >=", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdLessThan(String value) {
-            addCriterion("wx_id <", value, "wxId");
+        public Criteria andTokenLessThan(String value) {
+            addCriterion("token <", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdLessThanOrEqualTo(String value) {
-            addCriterion("wx_id <=", value, "wxId");
+        public Criteria andTokenLessThanOrEqualTo(String value) {
+            addCriterion("token <=", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdLike(String value) {
-            addCriterion("wx_id like", value, "wxId");
+        public Criteria andTokenLike(String value) {
+            addCriterion("token like", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdNotLike(String value) {
-            addCriterion("wx_id not like", value, "wxId");
+        public Criteria andTokenNotLike(String value) {
+            addCriterion("token not like", value, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdIn(List<String> values) {
-            addCriterion("wx_id in", values, "wxId");
+        public Criteria andTokenIn(List<String> values) {
+            addCriterion("token in", values, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdNotIn(List<String> values) {
-            addCriterion("wx_id not in", values, "wxId");
+        public Criteria andTokenNotIn(List<String> values) {
+            addCriterion("token not in", values, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdBetween(String value1, String value2) {
-            addCriterion("wx_id between", value1, value2, "wxId");
+        public Criteria andTokenBetween(String value1, String value2) {
+            addCriterion("token between", value1, value2, "token");
             return (Criteria) this;
         }
 
-        public Criteria andWxIdNotBetween(String value1, String value2) {
-            addCriterion("wx_id not between", value1, value2, "wxId");
+        public Criteria andTokenNotBetween(String value1, String value2) {
+            addCriterion("token not between", value1, value2, "token");
             return (Criteria) this;
         }
 
@@ -691,6 +691,76 @@ public class UserExample {
 
         public Criteria andRanksNotBetween(Long value1, Long value2) {
             addCriterion("ranks not between", value1, value2, "ranks");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdIsNull() {
+            addCriterion("wx_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdIsNotNull() {
+            addCriterion("wx_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdEqualTo(String value) {
+            addCriterion("wx_id =", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdNotEqualTo(String value) {
+            addCriterion("wx_id <>", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdGreaterThan(String value) {
+            addCriterion("wx_id >", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdGreaterThanOrEqualTo(String value) {
+            addCriterion("wx_id >=", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdLessThan(String value) {
+            addCriterion("wx_id <", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdLessThanOrEqualTo(String value) {
+            addCriterion("wx_id <=", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdLike(String value) {
+            addCriterion("wx_id like", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdNotLike(String value) {
+            addCriterion("wx_id not like", value, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdIn(List<String> values) {
+            addCriterion("wx_id in", values, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdNotIn(List<String> values) {
+            addCriterion("wx_id not in", values, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdBetween(String value1, String value2) {
+            addCriterion("wx_id between", value1, value2, "wxId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxIdNotBetween(String value1, String value2) {
+            addCriterion("wx_id not between", value1, value2, "wxId");
             return (Criteria) this;
         }
     }

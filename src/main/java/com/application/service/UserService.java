@@ -33,29 +33,40 @@ public class UserService {
     }
     @Transactional
     public int Update(User user){
-        Assert.notNull(user.getWxId());
+        Assert.notNull(user.getToken());
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andWxIdEqualTo(user.getWxId());
+        userExample.createCriteria().andTokenEqualTo(user.getToken());
         int i=userMapper.updateByExampleSelective(user, userExample);
         Assert.isTrue(i==1,"没有这个用户");
         return i;
     };
+    @Transactional
+    public int UpdatePassWord(User user,String wxId){
+        Assert.notNull(user.getToken());
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andUserNameEqualTo(user.getUserName())
+                .andPassWordEqualTo(user.getPassWord());
+        user.setWxId(wxId);
+        int i=userMapper.updateByExampleSelective(user, userExample);
+        Assert.isTrue(i==1,"没有这个用户");
+        return i;
+    }
     public User checkUser(String token) {
         Assert.isTrue(UserTokenUtils.checkUser(token),"没有登录");
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andWxIdEqualTo(token);
+        userExample.createCriteria().andTokenEqualTo(token);
         List<User> users = userMapper.selectByExample(userExample);
         return users.get(0);
     }
     @Transactional
     public void logOut(String token){
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andWxIdEqualTo(token);
+        userExample.createCriteria().andTokenEqualTo(token);
         List<User> users = userMapper.selectByExample(userExample);
         Assert.isTrue(users.size()==1,"账号或密码错误");
         User user = users.get(0);
-        UserTokenUtils.removeToken(user.getWxId());
-        user.setWxId(null);
+        UserTokenUtils.removeToken(user.getToken());
+        user.setToken(null);
         userMapper.updateByPrimaryKey(user);
     }
     @Transactional
@@ -67,9 +78,9 @@ public class UserService {
         Assert.isTrue(users.size()==1,"账号或密码错误");
         user = users.get(0);
         String s = UUID.randomUUID().toString();
-        user.setWxId(s);
+        user.setToken(s);
         userMapper.updateByPrimaryKey(user);
-        UserTokenUtils.addToken(user.getWxId());
+        UserTokenUtils.addToken(user.getToken());
         return s;
     }
     //删除这个用户，并删除这个用户做题记录，
@@ -86,9 +97,17 @@ public class UserService {
 
     public User getUser(String token) {
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andWxIdEqualTo(token);
+        userExample.createCriteria().andTokenEqualTo(token);
         List<User> users = userMapper.selectByExample(userExample);
         Assert.isTrue(users!=null&&users.size()==1,"没有这个用户");
+        return users.get(0);
+    }
+
+    public User checkUserWx(String id) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andWxIdEqualTo(id);
+        List<User> users = userMapper.selectByExample(userExample);
+        Assert.isTrue(users!=null&&users.size()==1,"没有绑定这个微信");
         return users.get(0);
     }
 }

@@ -32,7 +32,7 @@ public class CommentService {
         comment.setGmtModified(comment.getGmtCreate());
         Assert.notNull(problemMapper.selectByPrimaryKey(comment.getProblemId()),"没有这个问题");
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andWxIdEqualTo(token) ;
+        userExample.createCriteria().andTokenEqualTo(token) ;
         List<User> userList= userMapper.selectByExample(userExample);
         Assert.isTrue(userList!=null&&userList.size()==1,"没有上传者");
         User user = userList.get(0);
@@ -43,7 +43,7 @@ public class CommentService {
     public CommentDTO updateComment(Comment comment, String token) {
         comment.setGmtModified(System.currentTimeMillis());
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andWxIdEqualTo(token) ;
+        userExample.createCriteria().andTokenEqualTo(token) ;
         List<User> userList= userMapper.selectByExample(userExample);
         Assert.isTrue(userList!=null&&userList.size()==1,"没有上传者");
         User user = userList.get(0);
