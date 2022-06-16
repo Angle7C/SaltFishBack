@@ -24,4 +24,4 @@ logging:
     file:
         name: logs/log
     level:
-        com.application.mapper: DEBUG
+#        com.application.mapper: DEBUG
