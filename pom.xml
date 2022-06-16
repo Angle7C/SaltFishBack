@@ -23,6 +23,7 @@
                 <url>jdbc:mysql://127.0.0.1:3306/forkluogu?useUnicode=true&amp;characterEncoding=UTF-8</url>
                 <password>8848</password>
                 <emailCode>HDOBGLXJAHUYXDZD</emailCode>
+                <active>testlocal</active>
             </properties>
         </profile>
         <profile>
@@ -31,6 +32,7 @@
                 <url>jdbc:mysql://124.221.237.233:3306/forkluogu?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</url>
                 <password>8848xc8848</password>
                 <emailCode>HDOBGLXJAHUYXDZD</emailCode>
+                <active>dev</active>
             </properties>
         </profile>
     </profiles>
@@ -149,8 +151,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-<!--                    <fork>true</fork>-->
-<!--                    <addResources>true</addResources>-->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -159,6 +159,18 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <version>3.2.0</version>
+            <configuration>
+                <encoding>UTF-8</encoding>
+                <delimiters>
+                    <delimiter>@</delimiter>
+                </delimiters>
+                <useDefaultDelimiters>false</useDefaultDelimiters>
+            </configuration>
+        </plugin>
         </plugins>
     </build>
 

@@ -49,9 +49,9 @@ public class CommentController {
         CommentDTO commentDTO = commentService.deleteComment(id);
         return json.ok("删除题解成功", commentDTO);
     }
-    @GetMapping("/comment/{pageSize}/{pageIndex}")
-    public ResultJson pageList(@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex){
-        PageInfo<CommentDTO> pageInfo=commentService.allList(pageIndex,pageSize);
+    @GetMapping("/comment/{pageSize}/{pageIndex}/{id}")
+    public ResultJson pageList(@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex,@PathVariable("id") Long id){
+        PageInfo<CommentDTO> pageInfo=commentService.allList(pageIndex,pageSize,id);
         Page page=new Page(pageInfo.getTotal(),pageSize,pageIndex);
         return new  ResultJson().ok("查询成功",page,pageInfo.getList());
     }
