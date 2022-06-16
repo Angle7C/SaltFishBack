@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ProblemService {
@@ -72,5 +74,20 @@ public class ProblemService {
         Assert.notNull(problem,"没有这个问题");
         User user = userMapper.selectByPrimaryKey(problem.getUserId());
         return new ProblemDTO(problem,user);
+    }
+
+    public PageInfo<ProblemDTO> searchProbelm(String name, String[] tag, String level,Integer pageSize,Integer pageIndex) {
+        ProblemExample problemExample=new ProblemExample();
+        problemExample.createCriteria()
+                .andTitleLike(name)
+                .andTagEqualTo(ProblemDTO.changTag(tag))
+                .andLevelEqualTo(level);
+        List<Problem> problems = problemMapper.selectByExample(problemExample);
+        List<ProblemDTO> problemList = problems.stream()
+                                                    .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
+                                                    .collect(Collectors.toList());
+        PageHelper.startPage(pageIndex,pageSize);
+        PageInfo<ProblemDTO> pageInfo = new PageInfo<>(problemList);
+        return pageInfo;
     }
 }

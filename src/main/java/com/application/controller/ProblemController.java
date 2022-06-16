@@ -3,6 +3,7 @@ package com.application.controller;
 import cn.hutool.core.lang.Assert;
 import com.application.mapper.UserMapper;
 import com.application.model.DTO.ProblemDTO;
+import com.application.model.DTO.SearchDTO;
 import com.application.model.ResultJson;
 import com.application.model.entity.Problem;
 import com.application.model.subentity.Page;
@@ -61,7 +62,7 @@ public class ProblemController {
         PageInfo<Problem> pageInfo = problemService.allList(pageSize,pageIndex);
         List<Problem> list = pageInfo.getList();
         List<ProblemDTO> collect = list.stream()
-                .map(item -> new ProblemDTO(item))
+                .map(item -> new ProblemDTO(item,userMapper.selectByPrimaryKey(item.getUserId())))
                 .collect(Collectors.toList());
         ResultJson json=new ResultJson();
         return  json.ok("查询成功",
@@ -72,5 +73,11 @@ public class ProblemController {
     public ResultJson getProblem(@PathVariable("id") Long id){
         ProblemDTO problem=problemService.getProblem(id);
         return new ResultJson().ok("查询成功",problem);
+    }
+    @PostMapping("/search/{pageSize}/{pageIndex}")
+    public ResultJson search(@RequestBody SearchDTO searchDTO,@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex){
+        PageInfo<ProblemDTO> pageInfo = problemService.searchProbelm(searchDTO.getName(), searchDTO.getTag(), searchDTO.getLevel(), pageSize, pageIndex);
+        Page page = new Page(pageInfo.getTotal(), pageSize, pageIndex);
+        return new ResultJson().ok("查询成功",page,pageInfo.getList());
     }
 }
