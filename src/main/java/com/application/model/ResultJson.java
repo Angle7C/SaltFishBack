@@ -29,14 +29,15 @@ public class ResultJson<T> {
         return this;
 
     }
-    public void error(Long Code,String message){
-        error(Code,message,null);
+    public ResultJson error(Long Code,String message){
+        error(Code,message,null);return this;
     }
-    public void error(Long Code,String message,T data){
-        error(Code,message,data,null);
+    public ResultJson error(Long Code,String message,T data){
+        error(Code,message,data,null);return this;
 
     }
-    public void error(Long Code,String message,T data,List<T> list){
+    public ResultJson error(Long Code,String message,T data,List<T> list){
         this.Code=Code;this.message=message;this.data=data;this.list=list;
+        return this;
     }
 }

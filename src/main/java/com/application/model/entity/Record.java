@@ -18,9 +18,11 @@ public class Record {
 
     private Long problemId;
 
-    private Long socre;
+    private Long score;
 
-    private String code;
+    private String path;
+
+    private Integer type;
 
     public Long getId() {
         return id;
@@ -62,19 +64,27 @@ public class Record {
         this.problemId = problemId;
     }
 
-    public Long getSocre() {
-        return socre;
+    public Long getScore() {
+        return score;
     }
 
-    public void setSocre(Long socre) {
-        this.socre = socre;
+    public void setScore(Long score) {
+        this.score = score;
     }
 
-    public String getCode() {
-        return code;
+    public String getPath() {
+        return path;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
