@@ -13,6 +13,7 @@ import com.application.utils.EmailUtil;
 import com.application.utils.GiteeUtil;
 import com.application.utils.LogUtil;
 import com.application.utils.UserTokenUtils;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -104,8 +105,11 @@ public class UserController {
         return json;
     }
     @PostMapping("/user")
-    public ResultJson update( UserDTO userDTO,HttpServletRequest request,@RequestParam(value = "file",required = false) MultipartFile multipartFile){
+    public ResultJson update(@RequestParam(value="contentParam") String userString,
+                              HttpServletRequest request,
+                              @RequestPart MultipartFile multipartFile){
         String token = UserTokenUtils.checkUser(request.getCookies());
+        UserDTO userDTO = new Gson().fromJson(userString, UserDTO.class);
         User user = userDTO.toEntity();
         user.setToken(token);
         String avatarUrl = GiteeUtil.upload(multipartFile);
