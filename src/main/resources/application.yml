@@ -7,8 +7,9 @@ sercet: '420817abedd1fc6873ad94293887a61a'
 appID: 'wxd830318512a0f826'
 output: '@project.baseUri@/compiler'
 input:  '@project.baseUri@/compiler'
+imagePath: '@project.baseUri@'
 server:
-    port: 35565
+    port: 25565
 mybatis:
     mapper-locations: classpath:mapper\*.xml
 
@@ -24,6 +25,11 @@ spring:
         username: 'root'
         password: "8848"
         url: "jdbc:mysql://127.0.0.1:3306/forkluogu?useUnicode=true&characterEncoding=UTF-8"
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 100MB
+            max-request-size: 100MB
 logging:
     file:
         name: logs/log

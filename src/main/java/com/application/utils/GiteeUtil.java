@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,21 @@ public class GiteeUtil {
     private static  final String owner="mousetrap/image";
     private static  final String URL="https://gitee.com/api/v5/repos/"+owner+"/contents/avatar/";
     private static  final JsonParser jsonParser=new JsonParser();
+    public static String  upload(MultipartFile file,String path,Long userId){
+           String imagePath=path+ File.separator+userId.toString()+File.separator+createUploadURL(file.getOriginalFilename());
+           File image=new File(imagePath);
+           if(image.getParentFile().mkdirs()){
+               image.getParentFile().mkdirs();
+           }
+
+        try {
+            file.transferTo(image);
+            return imagePath;
+        } catch (IOException e) {
+            return null;
+        }
+
+    }
     public static String  upload(MultipartFile file)  {
         String uploadURL = createUploadURL(file.getOriginalFilename());
 
@@ -41,7 +58,7 @@ public class GiteeUtil {
     public static String createUploadURL(String fileName){
         String suffix = FileUtil.checkSuffix(fileName);
         Assert.notNull(suffix,"不支持这个文件后缀,支持");
-        return URL+UUID.randomUUID().toString()+suffix;
+        return UUID.randomUUID().toString()+suffix;
     }
     public static Map<String,Object> createUploadBody(byte[] data){
         Map<String,Object> map=new HashMap<>();

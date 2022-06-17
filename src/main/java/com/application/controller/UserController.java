@@ -15,6 +15,7 @@ import com.application.utils.LogUtil;
 import com.application.utils.UserTokenUtils;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,8 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Value("${imagePath}")
+    private String imagePath;
     @GetMapping("/checkuser")
     public ResultJson checkLogin(HttpServletRequest request) {
         ResultJson json = new ResultJson<>();
@@ -105,14 +108,14 @@ public class UserController {
         return json;
     }
     @PostMapping("/user")
-    public ResultJson update(@RequestParam(value="contentParam") String userString,
+    public ResultJson update(UserDTO userDTO,
                               HttpServletRequest request,
-                              @RequestPart MultipartFile multipartFile){
+                             @RequestPart(value = "file")  MultipartFile multipartFile){
         String token = UserTokenUtils.checkUser(request.getCookies());
-        UserDTO userDTO = new Gson().fromJson(userString, UserDTO.class);
         User user = userDTO.toEntity();
         user.setToken(token);
-        String avatarUrl = GiteeUtil.upload(multipartFile);
+        String avatarUrl = GiteeUtil.upload(multipartFile,imagePath,user.getId());
+        Assert.notNull(avatarUrl,"文件保存失败");
         LogUtil.debug("传输用户数据：{}",user);
         LogUtil.debug("文件名称: {}",multipartFile.getOriginalFilename());
         user.setImageUrl(avatarUrl);
