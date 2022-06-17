@@ -20,14 +20,14 @@ public class RecordDTO {
         this.problem=problem;
         this.score=record.getScore();
         this.id=record.getId();
-        this.path=null;
+        this.path=record.getPath();
         this.type=record.getType();
     }
     public Record toEntity(){
         Record record = new Record();
         record.setId(id);
         record.setScore(score);
-        record.setPath(null);
+        record.setPath(path);
         record.setType(type);
         record.setGmtCreate(null);
         record.setGmtModified(null);
