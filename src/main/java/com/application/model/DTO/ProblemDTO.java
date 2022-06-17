@@ -18,7 +18,7 @@ public class ProblemDTO {
     private String description;
     private List<String> tag;
     private String level;
-    private int num;
+    private Integer num;
     private static final List<String> list=new  ArrayList<String>();
     static{
         list.add("dp");

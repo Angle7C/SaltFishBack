@@ -35,6 +35,10 @@ public class RecordDTO {
         record.setProblemId(problem.getId());
         return record;
     }
+    public RecordDTO HiddePath(){
+        this.path=null;
+        return this;
+    }
     public void addSocre(int num){
         if(score==null){
             score=(1L<<num);

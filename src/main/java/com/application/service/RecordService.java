@@ -63,8 +63,10 @@ public class RecordService {
     private File runProcess(String file, String in, Long time) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.command(file);
+
         processBuilder.redirectInput(new File(in));
         File out = new File(file.substring(0, file.lastIndexOf(File.separator) + 1) + "out");
+
         processBuilder.redirectOutput(out);
         Process start = processBuilder.start();
         boolean b = start.waitFor(time, TimeUnit.MILLISECONDS);
