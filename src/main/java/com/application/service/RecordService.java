@@ -1,6 +1,7 @@
 package com.application.service;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.log.Log;
 import com.application.mapper.ProblemMapper;
 import com.application.mapper.RecordMapper;
 import com.application.mapper.UserMapper;
@@ -13,6 +14,7 @@ import com.application.utils.DTOUtil;
 import com.application.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,13 +37,16 @@ public class RecordService {
     private RecordMapper recordMapper;
     @Autowired
     private ProblemMapper problemMapper;
-    private  String exeC(String file) throws IOException, InterruptedException {
+    private  String exeC(String file,Long problemId) throws IOException, InterruptedException {
         ProcessBuilder processBuilder=new ProcessBuilder();
-        processBuilder.command("cmd",file,"-o",file.substring(0,file.lastIndexOf(File.separator)+1)+"1.exe");
+        processBuilder.command("cmd","/c","gcc",file,"-o",outPath+File.separator+problemId.toString()+File.separator+"1.exe");
+//        Runtime.getRuntime().exec("cmd /c g++"+fil)
+        File errorLog=new File("C:\\Users\\chen\\IdeaProjects\\SaltFishBack\\compiler\\log");
+        processBuilder.redirectError();
         Process start = processBuilder.start();
         boolean bool=start.waitFor(30, TimeUnit.SECONDS);
-        Assert.isTrue(bool,"编译失败");
-        return outPath+"1.exe";
+        Assert.isTrue(bool&&errorLog.length()==0,"编译失败");
+        return outPath+File.separator+problemId.toString()+File.separator+"1.exe";
     }
     private File runProcess(String file,String in,Long time) throws IOException, InterruptedException {
         ProcessBuilder processBuilder=new ProcessBuilder();
@@ -84,15 +89,19 @@ public class RecordService {
 
         File file = code.toFile(inPath,problemId,users.get(0).getId());
         String absolutePath = file.getAbsolutePath();
-        String path = exeC(absolutePath);
+        String path = exeC(absolutePath,problemId);
         User user=users.get(0);
         Record record = DTOUtil.getNewRecord(user, problem, path);
+
         recordMapper.insert(record);
         return new RecordDTO(record,
                 new UserDTO(user),
                 new ProblemDTO(userMapper.selectByPrimaryKey(problem.getUserId()),problem));
     }
+    @Async
     public RecordDTO runProcess(RecordDTO recordDTO){
+        LogUtil.info("准备运行程序");
+
         String path = recordDTO.getPath();
         String substring = path.substring(0, path.lastIndexOf(File.separator) + 1);
         try {
@@ -108,7 +117,11 @@ public class RecordService {
             LogUtil.error("文件异常",e.getMessage());
         } catch (InterruptedException e) {
             LogUtil.error("中断异常", e.getMessage());
+        }catch (RuntimeException e){
+            recordDTO.setType(2);
+            recordMapper.updateByPrimaryKey(recordDTO.toEntity());
         }
+        LogUtil.info("完成运行程序");
         return recordDTO;
 
     }

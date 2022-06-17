@@ -17,7 +17,7 @@ public class CodeC {
         if(!file.exists()) {
             file.mkdirs();
         }
-            file=new File(file.getAbsoluteFile()+File.separator+UserId.toString()+"_source.cpp");
+            file=new File(file.getAbsoluteFile()+File.separator+UserId.toString()+"_source.c");
         try {
                 file.createNewFile();
         } catch (IOException e) {

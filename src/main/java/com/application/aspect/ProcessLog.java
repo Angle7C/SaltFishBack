@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +17,15 @@ import org.springframework.stereotype.Component;
 public class ProcessLog {
     @Autowired
     private RecordService recordService;
-
-    @AfterReturning(value = "execution(public * com.application.controller.JudgeController.subCompiler())",returning = "json")
+    @Pointcut(" execution(public * com.application.controller.JudgeController.subCompiler())")
+    public void point(){}
+    @AfterReturning(value = "point()",returning = "json")
     public void exitProcess(JoinPoint joinPoint, ResultJson<RecordDTO> json){
+        log.info("准备运行程序");
         if(json.getCode()==1000L){
             recordService.runProcess(json.getData());
         }
+        log.info("完成运行程序");
     }
 
 }

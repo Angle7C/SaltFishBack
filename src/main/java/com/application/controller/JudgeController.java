@@ -37,7 +37,7 @@ public class JudgeController {
         Assert.notNull(token,"用户未登录");
         try {
             RecordDTO recordDTO = recordService.addRecord(id, token, code);
-
+            recordService.runProcess(recordDTO);
             return new ResultJson().ok("编译完成，等待运行",recordDTO);
         } catch (IOException e) {
             LogUtil.info("创建文件时失败:{}",e.getMessage());
