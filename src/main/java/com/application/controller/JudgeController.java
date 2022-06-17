@@ -32,24 +32,25 @@ public class JudgeController {
 
 
     @PostMapping("/submit/{id}")
-    public ResultJson subCompiler(@PathVariable("id") Long id, @RequestBody CodeC code,HttpServletRequest request) {
+    public ResultJson subCompiler(@PathVariable("id") Long id, @RequestBody CodeC code, HttpServletRequest request) {
         String token = UserTokenUtils.checkUser(request.getCookies());
-        Assert.notNull(token,"用户未登录");
+        Assert.notNull(token, "用户未登录");
         try {
             RecordDTO recordDTO = recordService.addRecord(id, token, code);
-            recordService.runProcess(recordDTO);
-            return new ResultJson().ok("编译完成，等待运行",recordDTO);
+            recordDTO = recordService.runProcess(recordDTO, code);
+            return new ResultJson().ok("编译完成,运行成功", recordDTO);
         } catch (IOException e) {
-            LogUtil.info("创建文件时失败:{}",e.getMessage());
+            LogUtil.info("创建文件时失败:{}", e.getMessage());
 
         } catch (InterruptedException e) {
-            LogUtil.info("编译失败:{}",e.getMessage());
+            LogUtil.info("编译失败:{}", e.getMessage());
         }
-        return new ResultJson().error(2003L,"服务器异常，请重试",null);
+        return new ResultJson().error(2003L, "服务器异常，请重试", null);
     }
+
     @PostMapping("getans/{id}")
-    public ResultJson getAns(@PathVariable("id") Long id){
+    public ResultJson getAns(@PathVariable("id") Long id) {
         RecordDTO recordDTO = recordService.selectRecord(id);
-        return new ResultJson().ok("查询成功",recordDTO);
+        return new ResultJson().ok("查询成功", recordDTO);
     }
 }

@@ -23,7 +23,7 @@ public class ProcessLog {
     public void exitProcess(JoinPoint joinPoint, ResultJson<RecordDTO> json){
         log.info("准备运行程序");
         if(json.getCode()==1000L){
-            recordService.runProcess(json.getData());
+//            recordService.runProcess(json.getData());
         }
         log.info("完成运行程序");
     }
