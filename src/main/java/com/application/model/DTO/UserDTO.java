@@ -16,6 +16,7 @@ public class UserDTO {
     private String avatarUrl;
     private Long ranks;
     private Long id;
+    private String des;
     public User toEntity(){
         User user = new User();
         user.setRanks(ranks);
@@ -23,6 +24,7 @@ public class UserDTO {
         user.setImageUrl(avatarUrl);
         user.setPassWord(MD5.create().digestHex(passWord,"UTF-8"));
         user.setId(id);
+        user.setDecription(des);
         return user;
     }
     public UserDTO(User user){
@@ -32,5 +34,6 @@ public class UserDTO {
         this.avatarUrl=user.getImageUrl();
         this.ranks=user.getRanks();
         this.id=user.getId();
+        this.des=user.getDecription();
     }
 }
