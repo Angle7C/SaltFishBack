@@ -8,7 +8,7 @@ appID: 'wxd830318512a0f826'
 output: '@project.baseUri@/compiler'
 input:  '@project.baseUri@/compiler'
 server:
-    port: 25565
+    port: 35565
 mybatis:
     mapper-locations: classpath:mapper\*.xml
 
