@@ -35,16 +35,16 @@ public class SignUtil {
     }
     public  static String yesDesc(){
         JSONArray jsonArray=new JSONArray();
-        int i = RandomUtil.randomInt(1,7);
+        int i = RandomUtil.randomInt(0,7);
         jsonArray.put(yesMap.get(i));
-        jsonArray.put(yesMap.get(RandomUtil.randomInt(i)+1));
+        jsonArray.put(yesMap.get(RandomUtil.randomInt(i,7)));
         return jsonArray.toString();
     }
     public static String noDesc(){
         JSONArray jsonArray=new JSONArray();
         int i = RandomUtil.randomInt(1,7);
         jsonArray.put(noMap.get(i));
-        jsonArray.put(noMap.get(RandomUtil.randomInt(i)+1));
+        jsonArray.put(noMap.get(RandomUtil.randomInt(i,7)));
         return jsonArray.toString();
     }
     public static Sign getSign(Long i, Date data){
