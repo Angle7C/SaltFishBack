@@ -18,6 +18,7 @@ public class ProblemDTO {
     private String description;
     private List<String> tag;
     private String level;
+    private int num;
     private static final List<String> list=new  ArrayList<String>();
     static{
         list.add("dp");
@@ -34,6 +35,7 @@ public class ProblemDTO {
         problem.setDescription(description);
         problem.setUserId(userDTO.getId());
         problem.setId(id);
+        problem.setNum(num);
         return problem;
     }
     public ProblemDTO(Problem problem,User user){
@@ -43,6 +45,7 @@ public class ProblemDTO {
         description=problem.getDescription();
         tag=toTag(problem.getTag());
         level=problem.getLevel();
+        num=problem.getNum();
     }
     public ProblemDTO(User user,Problem problem){
         id=problem.getId();
@@ -51,6 +54,7 @@ public class ProblemDTO {
         description=null;
         tag=toTag(problem.getTag());
         level=problem.getLevel();
+        num=problem.getNum();
     }
     public static Long changTag(List<String> tag){
         Long sum=0L;

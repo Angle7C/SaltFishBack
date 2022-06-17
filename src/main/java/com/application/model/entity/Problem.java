@@ -1,12 +1,5 @@
 package com.application.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Problem {
     private Long id;
 
@@ -21,6 +14,8 @@ public class Problem {
     private Long tag;
 
     private String level;
+
+    private Integer num;
 
     private String description;
 
@@ -78,6 +73,14 @@ public class Problem {
 
     public void setLevel(String level) {
         this.level = level == null ? null : level.trim();
+    }
+
+    public Integer getNum() {
+        return num;
+    }
+
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public String getDescription() {

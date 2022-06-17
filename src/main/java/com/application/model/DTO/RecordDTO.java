@@ -35,4 +35,11 @@ public class RecordDTO {
         record.setProblemId(problem.getId());
         return record;
     }
+    public void addSocre(int num){
+        if(score==null){
+            score=(1L<<num);
+        }else{
+            score=score|(1L<<num);
+        }
+    }
 }

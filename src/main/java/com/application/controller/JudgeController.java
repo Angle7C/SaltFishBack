@@ -1,29 +1,18 @@
 package com.application.controller;
-
 import cn.hutool.core.lang.Assert;
-
-import com.application.mapper.RecordMapper;
 import com.application.model.DTO.RecordDTO;
 import com.application.model.ResultJson;
-import com.application.model.entity.Record;
 import com.application.model.subentity.CodeC;
 import com.application.service.RecordService;
 import com.application.utils.LogUtil;
 import com.application.utils.UserTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-//import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
 @RestController
 public class JudgeController {
 
@@ -37,7 +26,7 @@ public class JudgeController {
         Assert.notNull(token, "用户未登录");
         try {
             RecordDTO recordDTO = recordService.addRecord(id, token, code);
-            recordDTO = recordService.runProcess(recordDTO, code);
+            recordDTO = recordService.runProcess(recordDTO);
             return new ResultJson().ok("编译完成,运行成功", recordDTO);
         } catch (IOException e) {
             LogUtil.info("创建文件时失败:{}", e.getMessage());

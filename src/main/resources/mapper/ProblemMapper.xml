@@ -9,6 +9,7 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="tag" property="tag" jdbcType="BIGINT" />
     <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.application.model.entity.Problem" extends="BaseResultMap" >
     <result column="description" property="description" jdbcType="LONGVARCHAR" />
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, gmt_create, gmt_modified, user_id, title, tag, level
+    id, gmt_create, gmt_modified, user_id, title, tag, level, num
   </sql>
   <sql id="Blob_Column_List" >
     description
@@ -128,10 +129,10 @@
   <insert id="insert" parameterType="com.application.model.entity.Problem" >
     insert into problem (id, gmt_create, gmt_modified, 
       user_id, title, tag, level, 
-      description)
+      num, description)
     values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
       #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tag,jdbcType=BIGINT}, #{level,jdbcType=VARCHAR}, 
-      #{description,jdbcType=LONGVARCHAR})
+      #{num,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.application.model.entity.Problem" >
     insert into problem
@@ -156,6 +157,9 @@
       </if>
       <if test="level != null" >
         level,
+      </if>
+      <if test="num != null" >
+        num,
       </if>
       <if test="description != null" >
         description,
@@ -182,6 +186,9 @@
       </if>
       <if test="level != null" >
         #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
       </if>
       <if test="description != null" >
         #{description,jdbcType=LONGVARCHAR},
@@ -218,6 +225,9 @@
       <if test="record.level != null" >
         level = #{record.level,jdbcType=VARCHAR},
       </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=INTEGER},
+      </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=LONGVARCHAR},
       </if>
@@ -235,6 +245,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       tag = #{record.tag,jdbcType=BIGINT},
       level = #{record.level,jdbcType=VARCHAR},
+      num = #{record.num,jdbcType=INTEGER},
       description = #{record.description,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +259,8 @@
       user_id = #{record.userId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       tag = #{record.tag,jdbcType=BIGINT},
-      level = #{record.level,jdbcType=VARCHAR}
+      level = #{record.level,jdbcType=VARCHAR},
+      num = #{record.num,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,6 +286,9 @@
       <if test="level != null" >
         level = #{level,jdbcType=VARCHAR},
       </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
       <if test="description != null" >
         description = #{description,jdbcType=LONGVARCHAR},
       </if>
@@ -288,6 +303,7 @@
       title = #{title,jdbcType=VARCHAR},
       tag = #{tag,jdbcType=BIGINT},
       level = #{level,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
       description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -298,7 +314,8 @@
       user_id = #{userId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       tag = #{tag,jdbcType=BIGINT},
-      level = #{level,jdbcType=VARCHAR}
+      level = #{level,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

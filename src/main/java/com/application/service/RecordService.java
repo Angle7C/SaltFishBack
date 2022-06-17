@@ -114,27 +114,25 @@ public class RecordService {
     }
 
 //    @Async
-    public RecordDTO runProcess(RecordDTO recordDTO, CodeC code) {
+    public RecordDTO runProcess(RecordDTO recordDTO) {
         LogUtil.info("准备运行程序");
-
         String path = recordDTO.getPath();
+        Integer num = recordDTO.getProblem().getNum();
         String substring = path.substring(0, path.lastIndexOf(File.separator) + 1);
-        try {
-            Boolean judge = judge(path, substring + "1.in", substring + "1.out", 5000L);
-            recordDTO.setType(1);
-            if (judge) {
-                recordDTO.setScore(100L);
+        recordDTO.setScore(0L);
+        for(int i=0;i<num;i++){
+            try {
+                Boolean judge = judge(path, substring + i+".in", substring + i+".out", 5000L);
+                recordDTO.setType(1);
+                if (judge) {
+                    recordDTO.addSocre(i);
+                }
+            } catch (Exception e) {
+                LogUtil.error("读入输入输出文件异常", e.getMessage());
+                recordDTO.setType(2);
+            }finally {
+                recordMapper.updateByPrimaryKey(recordDTO.toEntity());
             }
-            recordMapper.updateByPrimaryKey(recordDTO.toEntity());
-            return recordDTO;
-
-        } catch (IOException e) {
-            LogUtil.error("文件异常", e.getMessage());
-        } catch (InterruptedException e) {
-            LogUtil.error("中断异常", e.getMessage());
-        } catch (RuntimeException e) {
-            recordDTO.setType(2);
-            recordMapper.updateByPrimaryKey(recordDTO.toEntity());
         }
         LogUtil.info("完成运行程序");
         return recordDTO;
