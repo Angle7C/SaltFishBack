@@ -32,7 +32,7 @@ public class JudgeController {
         } catch (IOException e) {
             LogUtil.info("创建文件时失败:{}", e.getMessage());
 
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             LogUtil.info("编译失败:{}", e.getMessage());
         }
         return new ResultJson().error(2003L, "服务器异常，请重试", null);
