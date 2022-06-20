@@ -40,7 +40,7 @@ public class UserTokenUtils {
                 .filter(item -> item.getName().equals("userToken"))
                 .collect(Collectors.toList());
         Assert.isTrue(userToken!=null||userToken.size()!=1,"携带userToken出错");
-        return userToken.get(0).equals(UserToken.Admin_TOKEN.getMessage());
+        return userToken.get(0).getValue().equals(UserToken.Admin_TOKEN.getMessage());
 
     }
 }

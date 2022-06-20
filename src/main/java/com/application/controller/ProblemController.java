@@ -71,8 +71,9 @@ public class ProblemController {
     }
     @GetMapping("/problem/{id}")
     public ResultJson getProblem(@PathVariable("id") Long id){
-        ProblemDTO problem=problemService.getProblem(id);
-        return new ResultJson().ok("查询成功",problem);
+//        ProblemDTO problem=problemService.getProblem(id);
+        List<Problem> problem = problemService.getProblem(id);
+        return new ResultJson().ok("查询成功",problem.get(0));
     }
     @PostMapping("/search/{pageSize}/{pageIndex}")
     public ResultJson search(@RequestBody SearchDTO searchDTO,@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex){

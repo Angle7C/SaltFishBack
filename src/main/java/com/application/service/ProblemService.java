@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -69,11 +70,16 @@ public class ProblemService {
         return new ProblemDTO(problem,user);
     }
 
-    public ProblemDTO getProblem(Long id) {
-        Problem problem = problemMapper.selectByPrimaryKey(id);
-        Assert.notNull(problem,"没有这个问题");
-        User user = userMapper.selectByPrimaryKey(problem.getUserId());
-        return new ProblemDTO(problem,user);
+    public List<Problem> getProblem(Long... id) {
+        List<Problem> list=new LinkedList<>();
+        for (Long item : id) {
+            Problem problem = problemMapper.selectByPrimaryKey(item);
+            Assert.notNull(problem,"没有这个问题");
+
+            list.add(problem);
+        }
+//        User user = userMapper.selectByPrimaryKey(problem.getUserId());
+        return list;
     }
 
     public PageInfo<ProblemDTO> searchProbelm(String name, String[] tag, String level,Integer pageSize,Integer pageIndex) {

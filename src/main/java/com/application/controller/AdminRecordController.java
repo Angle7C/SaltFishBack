@@ -37,9 +37,11 @@ public class AdminRecordController {
         List<RecordDTO> list= recordService.selectRecord(userId,probelmId);
         return new ResultJson().ok("查询用户特定题目的记录",null,list);
     }
+    //查询特定记录的代码
     @PostMapping("/recordcode/{recordId}")
-    public ResultJson getRecordCode(@PathVariable("recordId") Long recordId,HttpServletRequest request) throws IOException {
-        Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
+    public ResultJson getRecordCode(HttpServletRequest request,@PathVariable("recordId") Long recordId) throws IOException {
+        boolean b = UserTokenUtils.checkAdmin(request.getCookies());
+        Assert.isTrue(b,"管理员没有登陆");
         RecordDTO recordDTO = recordService.selectRecord(recordId);
         String path = recordDTO.getPath();
         File file=new File(path.substring(0,path.lastIndexOf(File.separator)+1)+recordDTO.getUser().getId()+"_source.c");

@@ -29,14 +29,14 @@ public class AdminUserController {
     @Autowired
     private RecordService recordService;
     @PostMapping("/login")
-    public ResultJson loginAdmin(UserDTO userDTO, HttpServletResponse response){
+    public ResultJson loginAdmin(@RequestBody  UserDTO userDTO, HttpServletResponse response){
         String name = userDTO.getName();
         String passWord = userDTO.getPassWord();
         Assert.isTrue("Admin".equals(name),"密码或账号错误");
         Assert.notNull(passWord,"密码或账号错误");
         passWord = MD5.create().digestHex(passWord, "UTF-8");
         Assert.isTrue(UserToken.Admin_TOKEN.getMessage().equals(passWord),"密码或账号错误");
-        Cookie cookie = new Cookie("userToken", UserToken.Admin_TOKEN.getMessage());
+        Cookie cookie = new Cookie("userToken",UserToken.Admin_TOKEN.getMessage());
         cookie.setMaxAge(60*60*24);
         response.addCookie(cookie);
         return new ResultJson().ok("管理员登陆成功");
