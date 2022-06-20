@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.List;
-
 @RestController
 @RequestMapping("/Admin")
 public class AdminRecordController {
@@ -24,6 +23,7 @@ public class AdminRecordController {
     private ProblemService problemService;
     @Autowired
     private RecordService recordService;
+
     @GetMapping("/record/{userId}")
     public ResultJson getRecordUser(@PathVariable("userId") Long userId,HttpServletRequest request){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
@@ -43,6 +43,7 @@ public class AdminRecordController {
         boolean b = UserTokenUtils.checkAdmin(request.getCookies());
         Assert.isTrue(b,"管理员没有登陆");
         RecordDTO recordDTO = recordService.selectRecord(recordId);
+        recordDTO.getProblem().setDescription(null);
         String path = recordDTO.getPath();
         File file=new File(path.substring(0,path.lastIndexOf(File.separator)+1)+recordDTO.getUser().getId()+"_source.c");
         BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -51,6 +52,6 @@ public class AdminRecordController {
         while ((str=bufferedReader.readLine())!=null){
             stringBuilder.append(str);
         }
-        return new ResultJson().ok("查询代码成功",new RecordSub(bufferedReader.toString(),recordDTO));
+        return new ResultJson().ok("查询代码成功",new RecordSub(stringBuilder.toString(),recordDTO));
     }
 }

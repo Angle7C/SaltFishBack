@@ -38,25 +38,7 @@ public class ProblemController {
         json.ok("创建问题成功",problem);
         return json;
     }
-    @PostMapping("/problem")
-    public ResultJson updateProblem(@RequestBody ProblemDTO problemDTO,HttpServletRequest request){
-        String s = UserTokenUtils.checkUser(request.getCookies());
-        Assert.isTrue(s.equals("Admin"), "管理员用户验证失败");
-        Problem problem = problemDTO.toEntity();
-        Assert.isTrue(problem.getUserId()!=null,"请设置上传者");
-        problemDTO = problemService.update(problem);
-        ResultJson json=new ResultJson();
-        json.ok("更新问题成功",problemDTO);
-        return json;
-    }
-    @DeleteMapping("/problem/{id}")
-    public ResultJson delProblem(@PathVariable("id") Long id,HttpServletRequest request){
 
-        String s = UserTokenUtils.checkUser(request.getCookies());
-        Assert.isTrue(s.equals("Admin"), "管理员用户验证失败");
-        ProblemDTO delete = problemService.delete(id);
-        return new ResultJson().ok("删除成功",delete);
-    }
     @GetMapping("problem/{pageSize}/{pageIndex}")
     public ResultJson getProblemList(@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex){
         PageInfo<Problem> pageInfo = problemService.allList(pageSize,pageIndex);
