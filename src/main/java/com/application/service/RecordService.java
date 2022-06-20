@@ -186,10 +186,29 @@ public class RecordService {
                 .collect(Collectors.toList());
         return collect;
     }
+    public List<RecordDTO> selectRecord(Long problemId,Long userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        Assert.notNull(user, "没有这个用户");
+        Problem problem = problemMapper.selectByPrimaryKey(problemId);
+        Assert.notNull(problem, "没有这个问题");
+        RecordExample recordExample=new RecordExample();
+        recordExample.createCriteria()
+                .andProblemIdEqualTo(problemId)
+                .andUserIdEqualTo(user.getId());
+        List<Record> records = recordMapper.selectByExample(recordExample);
+        List<RecordDTO> collect = records
+                .stream()
+                .map(item -> new RecordDTO(item,problem))
+                .collect(Collectors.toList());
+        return collect;
+    }
 
     public List<RecordDTO> selectUserId(Long id) {
         RecordExample recordExample=new RecordExample();
         recordExample.createCriteria().andUserIdEqualTo(id);
+        List<Record> records = recordMapper.selectByExample(recordExample);
+        records.stream()
+                .map(item->new RecordDTO(item,problemMapper.selectByPrimaryKey(item.getProblemId())));
         return null;
     }
 //    public List<>

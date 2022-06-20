@@ -47,6 +47,15 @@ public class ProblemDTO {
         level=problem.getLevel();
         num=problem.getNum();
     }
+    public ProblemDTO(Problem problem){
+        id=problem.getId();
+        userDTO=null;
+        title=problem.getTitle();
+        description=problem.getDescription();
+        tag=toTag(problem.getTag());
+        level=problem.getLevel();
+        num=problem.getNum();
+    }
     public ProblemDTO(User user,Problem problem){
         id=problem.getId();
         userDTO=new UserDTO(user);

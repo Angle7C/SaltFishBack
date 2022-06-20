@@ -1,5 +1,6 @@
 package com.application.model.DTO;
 
+import com.application.model.entity.Problem;
 import com.application.model.entity.Record;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,14 @@ public class RecordDTO {
     public RecordDTO(Record record){
         this.user=null;
         this.problem=null;
+        this.score=record.getScore();
+        this.id=record.getId();
+        this.path=record.getPath();
+        this.type=record.getType();
+    }
+    public RecordDTO(Record record, Problem problem){
+        this.user=null;
+        this.problem=new ProblemDTO(problem);
         this.score=record.getScore();
         this.id=record.getId();
         this.path=record.getPath();
