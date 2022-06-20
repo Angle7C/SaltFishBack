@@ -13,7 +13,7 @@ public class RecordDTO {
     private Long id;
     private UserDTO user;
     private ProblemDTO problem;
-    private Long score;
+    private Long score=0L;
     private String path;
     private Integer type;
     public RecordDTO(Record record,UserDTO userDTO,ProblemDTO problem){
@@ -56,11 +56,8 @@ public class RecordDTO {
         this.path=null;
         return this;
     }
-    public void addSocre(int num){
-        if(score==null){
-            score=(1L<<num);
-        }else{
-            score=score|(1L<<num);
-        }
+    public void addSocre(boolean judge){
+        score <<= 1;
+        score |= judge?1:0;
     }
 }
