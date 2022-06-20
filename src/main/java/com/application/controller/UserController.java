@@ -32,22 +32,26 @@ public class UserController {
     private String imagePath;
     @GetMapping("/checkuser")
     public ResultJson checkLogin(HttpServletRequest request) {
-        ResultJson json = new ResultJson<>();
-        String value = null;
-        //携带了token
-        Cookie[] cookies = request.getCookies();
-        Assert.notNull(cookies,"没有携带Cookie");
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("userToken")) {
-                value = cookie.getValue();
-                break;
-            }
-        }
-        Assert.notNull(value, "没有携带userToken");
-        User user=userService.checkUser(value);
+//        ResultJson json = new ResultJson<>();
+//        String value = null;
+//        //携带了token
+//        Cookie[] cookies = request.getCookies();
+//        Assert.notNull(cookies,"没有携带Cookie");
+//        for (Cookie cookie : cookies) {
+//            if (cookie.getName().equals("userToken")) {
+//                value = cookie.getValue();
+//                break;
+//            }
+//        }
+//        Assert.notNull(value, "没有携带userToken");
+//        User user=userService.checkUser(value);
+
+        String s = UserTokenUtils.checkUser(request.getCookies());
+        Assert.notNull(s,"没有登录");
+        User user=userService.getUser(s);
         Assert.notNull(user,  "没有这个用户");
-        json.ok("成功登录了",new UserDTO(user));
-        return json;
+        return new ResultJson().ok("成功登录了",new UserDTO(user));
+
     }
     @PostMapping("/logout")
     public ResultJson logout(HttpServletRequest request, HttpServletResponse response){

@@ -33,7 +33,13 @@ public class WxStateUtil {
         logger.info("结束");
     }
     public static Long checkState(String state){
-        return stateMap.get(state);
+        Long value=null;
+        try{
+             value=stateMap.get(state);
+        }catch (Exception e){
+            value=null;
+        }
+        return value;
     }
     @Scheduled(cron = "0/30 * * * * ? ")
     public static synchronized void timeRmove(){

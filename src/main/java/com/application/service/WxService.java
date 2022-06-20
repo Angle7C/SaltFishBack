@@ -9,6 +9,7 @@ import com.application.model.entity.User;
 import com.application.model.entity.UserExample;
 import com.application.model.entity.WxUser;
 import com.application.utils.ImageUtil;
+import com.application.utils.LogUtil;
 import com.application.utils.UserTokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,6 +60,7 @@ public class WxService  {
         //这个账号没有绑定了
        openId=wxUser.getOpenid();
        if(users!=null&&users.size()==0){
+           LogUtil.info("微信没有绑定");
             User user = new User();
             WxUser.toUser(user,wxUser);
             UserTokenUtils.addToken(openId);
@@ -67,7 +69,11 @@ public class WxService  {
             userMapper.insert(user);
             return user;
        }else{
+           LogUtil.info("微信已经绑定");
             UserTokenUtils.addToken(openId);
+            User user=users.get(0);
+            user.setToken(openId);
+            userMapper.updateByPrimaryKey(user);
             return users.get(0);
         }
 

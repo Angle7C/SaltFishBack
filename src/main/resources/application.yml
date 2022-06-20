@@ -8,7 +8,7 @@ appID: 'wxd830318512a0f826'
 output: '@project.baseUri@/compiler'
 input:  '@project.baseUri@/compiler'
 imagePath: '@project.baseUri@/image'
-nat: 'http://luogu.vaiwan.com'
+nat: 'http://luogu.vaiwan.cn'
 wxlogin: "localhost"
 server:
     port: 25565
