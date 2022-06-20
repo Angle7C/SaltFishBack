@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @Validated
+
 public class CommentController {
     @Autowired
     private CommentService commentService;
@@ -55,4 +56,6 @@ public class CommentController {
         Page page=new Page(pageInfo.getTotal(),pageSize,pageIndex);
         return new  ResultJson().ok("查询成功",page,pageInfo.getList());
     }
+
+
 }

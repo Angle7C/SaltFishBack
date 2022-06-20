@@ -3,6 +3,7 @@ package com.application.service;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.log.Log;
 import com.application.mapper.ProblemMapper;
+import com.application.mapper.RecordExtMapper;
 import com.application.mapper.RecordMapper;
 import com.application.mapper.UserMapper;
 import com.application.model.DTO.ProblemDTO;
@@ -24,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class RecordService {
@@ -37,7 +39,8 @@ public class RecordService {
     private RecordMapper recordMapper;
     @Autowired
     private ProblemMapper problemMapper;
-
+    @Autowired
+    private RecordExtMapper recordExtMapper;
     private String exeC(String file, Long problemId, CodeC code) throws IOException, InterruptedException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (code.getType().equals("MSVC")) {
@@ -152,4 +155,42 @@ public class RecordService {
                 new UserDTO(user),
                 new ProblemDTO(problem, userMapper.selectByPrimaryKey(problem.getUserId())));
     }
+    public  List<RecordDTO> selectRecord(String userToken) {
+//        Record record = recordMapper.selectByPrimaryKey(id);
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andTokenEqualTo(userToken);
+        List<User> users = userMapper.selectByExample(userExample);
+        Assert.isTrue(users.size()==1, "没有这个用户");
+        List<Record> records = recordExtMapper.selectDistinctProblem(users.get(0).getId());
+        List<RecordDTO> collect = records.stream()
+                .map(item -> new RecordDTO(item).HiddePath())
+                .collect(Collectors.toList());
+        return collect;
+    }
+    public List<RecordDTO> selectRecord(Long problemId,String token) {
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andTokenEqualTo(token);
+        List<User> users = userMapper.selectByExample(userExample);
+        Assert.isTrue(users.size()==1, "没有这个用户");
+        Problem problem = problemMapper.selectByPrimaryKey(problemId);
+        Assert.notNull(problem, "没有这个问题");
+        User user=users.get(0);
+        RecordExample recordExample=new RecordExample();
+        recordExample.createCriteria()
+                .andProblemIdEqualTo(problemId)
+                .andUserIdEqualTo(user.getId());
+        List<Record> records = recordMapper.selectByExample(recordExample);
+        List<RecordDTO> collect = records
+                .stream()
+                .map(item -> new RecordDTO(item).HiddePath())
+                .collect(Collectors.toList());
+        return collect;
+    }
+
+    public List<RecordDTO> selectUserId(Long id) {
+        RecordExample recordExample=new RecordExample();
+        recordExample.createCriteria().andUserIdEqualTo(id);
+        return null;
+    }
+//    public List<>
 }

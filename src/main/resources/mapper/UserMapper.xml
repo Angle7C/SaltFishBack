@@ -105,12 +105,12 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.application.model.entity.User" >
-    insert into user (id, gmt_create, gmt_modified, 
+  <insert id="insert" parameterType="com.application.model.entity.User" keyProperty="id" useGeneratedKeys="true">
+    insert into user ( gmt_create, gmt_modified,
       decription, user_name, pass_word, 
       token, image_url, ranks, 
       wx_id)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
+    values (#{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT},
       #{decription,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
       #{token,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{ranks,jdbcType=BIGINT}, 
       #{wxId,jdbcType=VARCHAR})

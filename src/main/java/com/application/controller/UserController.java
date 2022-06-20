@@ -124,20 +124,8 @@ public class UserController {
         json.ok("更新用户数据成功",new UserDTO(user));
         return json;
     }
-    @DeleteMapping("/user/{id}")
-    public ResultJson delUser(@PathVariable("id") Long id,HttpServletRequest request){
-        String str = UserTokenUtils.checkUser(request.getCookies());
-        Assert.isTrue(str.equals("Admin"),"管理员未登录");
-        User user=userService.delete(id);
-        return new ResultJson().ok("删除成功");
-    }
-    @PutMapping("/user")
-    public ResultJson addUser(@RequestBody UserDTO userDTO,HttpServletRequest request){
-        String token = UserTokenUtils.checkUser(request.getCookies());
-        Assert.isTrue(token.equals("Admin"),"管理员未登录");
-        User user = userService.create(userDTO.toEntity());
-        return new ResultJson<>().ok("添加一个新用户成功",user);
-    }
+
+
     @GetMapping("/getuser")
     public ResultJson getUserMessage(HttpServletRequest request){
         String token=UserTokenUtils.checkUser(request.getCookies());

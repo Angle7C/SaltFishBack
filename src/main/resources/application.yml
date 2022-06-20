@@ -7,7 +7,9 @@ sercet: '420817abedd1fc6873ad94293887a61a'
 appID: 'wxd830318512a0f826'
 output: '@project.baseUri@/compiler'
 input:  '@project.baseUri@/compiler'
-imagePath: '@project.baseUri@'
+imagePath: '@project.baseUri@/image'
+nat: 'http://luogu.vaiwan.com'
+wxlogin: "localhost"
 server:
     port: 25565
 mybatis:

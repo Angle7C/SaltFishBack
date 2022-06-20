@@ -23,6 +23,14 @@ public class RecordDTO {
         this.path=record.getPath();
         this.type=record.getType();
     }
+    public RecordDTO(Record record){
+        this.user=null;
+        this.problem=null;
+        this.score=record.getScore();
+        this.id=record.getId();
+        this.path=record.getPath();
+        this.type=record.getType();
+    }
     public Record toEntity(){
         Record record = new Record();
         record.setId(id);

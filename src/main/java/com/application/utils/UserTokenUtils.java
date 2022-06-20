@@ -1,6 +1,7 @@
 package com.application.utils;
 
 import cn.hutool.core.lang.Assert;
+import com.application.constant.enums.UserToken;
 
 import javax.servlet.http.Cookie;
 import javax.validation.constraints.NotNull;
@@ -33,4 +34,13 @@ public class UserTokenUtils {
     }
 
 
+    public static boolean checkAdmin(Cookie[] cookies) {
+        Assert.notNull(cookies,"没有携带Cookie");
+        List<Cookie> userToken = Arrays.stream(cookies)
+                .filter(item -> item.getName().equals("userToken"))
+                .collect(Collectors.toList());
+        Assert.isTrue(userToken!=null||userToken.size()!=1,"携带userToken出错");
+        return userToken.get(0).equals(UserToken.Admin_TOKEN.getMessage());
+
+    }
 }
