@@ -92,4 +92,8 @@ public class ProblemDTO {
         list.add(tag);
     }
 
+    public static List<String> returnTag(){
+        return list;
+    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +56,14 @@ public class ProblemService {
         PageInfo<Problem> problemPageInfo = new PageInfo<>(problems);
         return problemPageInfo;
     }
+    public List<ProblemDTO> allList() {
+        ProblemExample problemExample=new ProblemExample();
+        List<Problem> problems = problemMapper.selectByExampleWithBLOBs(problemExample);
+        List<ProblemDTO> collect = problems.stream()
+                .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
+                .collect(Collectors.toList());
+        return collect;
+    }
     @Transactional
     public ProblemDTO delete(Long id) {
         //删除做题记录
@@ -71,15 +80,12 @@ public class ProblemService {
     }
 
     public List<Problem> getProblem(Long... id) {
-        List<Problem> list=new LinkedList<>();
-        for (Long item : id) {
-            Problem problem = problemMapper.selectByPrimaryKey(item);
-            Assert.notNull(problem,"没有这个问题");
-
-            list.add(problem);
-        }
+        List<Long> collect = Arrays.stream(id).collect(Collectors.toList());
+        ProblemExample problemExample=new ProblemExample();
+        problemExample.createCriteria().andIdIn(collect);
+        List<Problem> problems = problemMapper.selectByExampleWithBLOBs(problemExample);
 //        User user = userMapper.selectByPrimaryKey(problem.getUserId());
-        return list;
+        return problems;
     }
 
     public PageInfo<ProblemDTO> searchProbelm(String name, String[] tag, String level,Integer pageSize,Integer pageIndex) {

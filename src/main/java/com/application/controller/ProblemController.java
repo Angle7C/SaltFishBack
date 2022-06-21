@@ -67,4 +67,8 @@ public class ProblemController {
         Page page = new Page(pageInfo.getTotal(), pageSize, pageIndex);
         return new ResultJson().ok("查询成功",page,pageInfo.getList());
     }
+    @GetMapping("/tag")
+    public ResultJson getTag(){
+        return new ResultJson().ok("查询TAG",null,ProblemDTO.returnTag());
+    }
 }
