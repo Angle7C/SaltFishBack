@@ -11,11 +11,12 @@ import com.application.model.entity.Review;
 import com.application.model.entity.ReviewExample;
 import com.application.model.entity.Tie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class ReviewService {
     @Autowired
     private ReviewMapper reviewMapper;

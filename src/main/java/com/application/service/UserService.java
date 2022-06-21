@@ -54,6 +54,16 @@ public class UserService {
         Assert.isTrue(i==1,"没有这个用户");
         return i;
     };
+    public int UpdateAdmin(User user){
+        user.setGmtModified(System.currentTimeMillis());
+        User userTemp = userMapper.selectByPrimaryKey(user.getId());
+        if(user.getPassWord()==null)
+        user.setPassWord(userTemp.getPassWord());
+        user.setRanks(userTemp.getRanks());
+        int i=userMapper.updateByPrimaryKey(user);
+        Assert.isTrue(i==1,"没有这个用户");
+        return i;
+    };
     public void UpdateUserID(User user){
         user.setGmtModified(System.currentTimeMillis());
         User userTemp = userMapper.selectByPrimaryKey(user.getId());
@@ -72,7 +82,7 @@ public class UserService {
         return i;
     }
     public User checkUser(String token) {
-        Assert.isTrue(UserTokenUtils.checkUser(token),"没有登录");
+//        Assert.isTrue(UserTokenUtils.checkUser(token),"没有登录");
         UserExample userExample=new UserExample();
         userExample.createCriteria().andTokenEqualTo(token);
         List<User> users = userMapper.selectByExample(userExample);
@@ -154,6 +164,12 @@ public class UserService {
                 users.stream()
                         .map(item -> new UserDTO(item))
                         .collect(Collectors.toList());
+        return collect;
+    }
+
+    public List<UserDTO> findAll() {
+        List<User> users = userMapper.selectByExample(new UserExample());
+        List<UserDTO> collect = users.stream().map(item -> new UserDTO(item)).collect(Collectors.toList());
         return collect;
     }
 }

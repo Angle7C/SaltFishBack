@@ -1,5 +1,12 @@
 package com.application.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Review {
     private Long id;
 
@@ -10,6 +17,8 @@ public class Review {
     private Long likes;
 
     private Long problemId;
+
+    private String title;
 
     public Long getId() {
         return id;
@@ -49,5 +58,13 @@ public class Review {
 
     public void setProblemId(Long problemId) {
         this.problemId = problemId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 }

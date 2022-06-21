@@ -28,11 +28,11 @@ public class TieDTO {
         tie.setUserId(user.getId());
         tie.setProblemId(problem.getId());
         tie.setTime(time);
-        tie.setDesc(desc);
+        tie.setDescs(desc);
         return tie;
     }
     public TieDTO(Tie tie){
-        this.desc=tie.getDesc();
+        this.desc=tie.getDescs();
         id=tie.getId();
         title= tie.getTitle();;
         user=null;

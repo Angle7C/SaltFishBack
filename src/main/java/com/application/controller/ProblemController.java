@@ -4,8 +4,10 @@ import cn.hutool.core.lang.Assert;
 import com.application.mapper.UserMapper;
 import com.application.model.DTO.ProblemDTO;
 import com.application.model.DTO.SearchDTO;
+import com.application.model.DTO.UserDTO;
 import com.application.model.ResultJson;
 import com.application.model.entity.Problem;
+import com.application.model.entity.User;
 import com.application.model.subentity.Page;
 import com.application.service.ProblemService;
 import com.application.utils.UserTokenUtils;
@@ -54,8 +56,10 @@ public class ProblemController {
     @GetMapping("/problem/{id}")
     public ResultJson getProblem(@PathVariable("id") Long id){
 //        ProblemDTO problem=problemService.getProblem(id);
-        List<Problem> problem = problemService.getProblem(id);
-        return new ResultJson().ok("查询成功",problem.get(0));
+        List<Problem> problems = problemService.getProblem(id);
+        Problem problem=problems.get(0);
+        User user = userMapper.selectByPrimaryKey(problem.getUserId());
+        return new ResultJson().ok("查询成功",new ProblemDTO(problem,user));
     }
     @PostMapping("/search/{pageSize}/{pageIndex}")
     public ResultJson search(@RequestBody SearchDTO searchDTO,@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex){

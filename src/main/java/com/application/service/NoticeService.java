@@ -8,12 +8,13 @@ import com.application.model.entity.Review;
 import com.application.model.entity.User;
 import com.application.model.entity.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
-
+@Service
 public class NoticeService {
     @Autowired
     private NoticeMapper noticeMapper;
@@ -25,19 +26,22 @@ public class NoticeService {
     public void sendMessage(Review revice, Matcher matcher) {
         Long userId = revice.getUserId();
         List<String> names=new LinkedList<>();
-        for(int i=0;i<matcher.groupCount();i++){
-            names.add(matcher.group(i));
-        }
-        UserExample userExample=new UserExample();
-        userExample.createCriteria().andUserNameIn(names);
+        boolean b = matcher.find();
+        if(b==true){
+            for(int i=0;i<=matcher.groupCount();i++){
+                names.add(matcher.group(i));
+            }
+            UserExample userExample=new UserExample();
+            userExample.createCriteria().andUserNameIn(names);
 
-        List<User> users = userMapper.selectByExample(userExample);
-        List<Notice> notices=new LinkedList<>();
-        users.stream().parallel().forEach(item->{
-            notices.add(new Notice(null,item.getId(),revice.getUserId(),0));
-        });
-        insert(notices);
-        reviewMapper.insert(revice);
+            List<User> users = userMapper.selectByExample(userExample);
+            List<Notice> notices=new LinkedList<>();
+            users.stream().parallel().forEach(item->{
+                notices.add(new Notice(null,item.getId(),revice.getUserId(), revice.getId(), 0));
+            });
+            insert(notices);
+        }
+//        reviewMapper.insert(revice);
     }
     private void insert(List<Notice> list){
         list.forEach(item->noticeMapper.insert(item));

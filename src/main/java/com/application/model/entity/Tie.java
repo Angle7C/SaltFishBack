@@ -1,7 +1,9 @@
 package com.application.model.entity;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class Tie {
     private Long id;
 
@@ -11,7 +13,7 @@ public class Tie {
 
     private Long problemId;
 
-    private String desc;
+    private String descs;
 
     private Date time;
 
@@ -47,12 +49,12 @@ public class Tie {
         this.problemId = problemId;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescs() {
+        return descs;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescs(String descs) {
+        this.descs = descs == null ? null : descs.trim();
     }
 
     public Date getTime() {

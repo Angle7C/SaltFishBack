@@ -18,13 +18,6 @@ public class Notice {
 
     private Integer type;
 
-    public Notice(Long id, Long reciveId, Long sendId, int i) {
-        this.id = id;
-        this.reciveId=reciveId;
-        this.emailId=sendId;
-        this.type=i;
-    }
-
     public Long getId() {
         return id;
     }

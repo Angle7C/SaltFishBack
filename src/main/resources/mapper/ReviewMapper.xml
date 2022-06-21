@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.application.mapper.TieMapper" >
-  <resultMap id="BaseResultMap" type="com.application.model.entity.Tie" >
+<mapper namespace="com.application.mapper.ReviewMapper" >
+  <resultMap id="BaseResultMap" type="com.application.model.entity.Review" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="likes" property="likes" jdbcType="BIGINT" />
     <result column="problem_id" property="problemId" jdbcType="BIGINT" />
-    <result column="descs" property="descs" jdbcType="VARCHAR" />
-    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, user_id, problem_id, descs, time
+    id, user_id, content, likes, problem_id, title
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.application.model.entity.TieExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.application.model.entity.ReviewExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tiezi
+    from email
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,96 +87,96 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from tiezi
+    from email
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from tiezi
+    delete from email
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.application.model.entity.TieExample" >
-    delete from tiezi
+  <delete id="deleteByExample" parameterType="com.application.model.entity.ReviewExample" >
+    delete from email
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.application.model.entity.Tie" >
-    insert into tiezi (id, title, user_id, 
-      problem_id, descs, time
+  <insert id="insert" parameterType="com.application.model.entity.Review" >
+    insert into email (id, user_id, content, 
+      likes, problem_id, title
       )
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
-      #{problemId,jdbcType=BIGINT}, #{descs,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{likes,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.application.model.entity.Tie" >
-    insert into tiezi
+  <insert id="insertSelective" parameterType="com.application.model.entity.Review" >
+    insert into email
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="title != null" >
-        title,
-      </if>
       <if test="userId != null" >
         user_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="likes != null" >
+        likes,
       </if>
       <if test="problemId != null" >
         problem_id,
       </if>
-      <if test="descs != null" >
-        descs,
-      </if>
-      <if test="time != null" >
-        time,
+      <if test="title != null" >
+        title,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=BIGINT},
       </if>
       <if test="problemId != null" >
         #{problemId,jdbcType=BIGINT},
       </if>
-      <if test="descs != null" >
-        #{descs,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.application.model.entity.TieExample" resultType="java.lang.Integer" >
-    select count(*) from tiezi
+  <select id="countByExample" parameterType="com.application.model.entity.ReviewExample" resultType="java.lang.Integer" >
+    select count(*) from email
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update tiezi
+    update email
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.title != null" >
-        title = #{record.title,jdbcType=VARCHAR},
-      </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.likes != null" >
+        likes = #{record.likes,jdbcType=BIGINT},
       </if>
       <if test="record.problemId != null" >
         problem_id = #{record.problemId,jdbcType=BIGINT},
       </if>
-      <if test="record.descs != null" >
-        descs = #{record.descs,jdbcType=VARCHAR},
-      </if>
-      <if test="record.time != null" >
-        time = #{record.time,jdbcType=TIMESTAMP},
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -184,45 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update tiezi
+    update email
     set id = #{record.id,jdbcType=BIGINT},
-      title = #{record.title,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
+      likes = #{record.likes,jdbcType=BIGINT},
       problem_id = #{record.problemId,jdbcType=BIGINT},
-      descs = #{record.descs,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=TIMESTAMP}
+      title = #{record.title,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.application.model.entity.Tie" >
-    update tiezi
+  <update id="updateByPrimaryKeySelective" parameterType="com.application.model.entity.Review" >
+    update email
     <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        likes = #{likes,jdbcType=BIGINT},
       </if>
       <if test="problemId != null" >
         problem_id = #{problemId,jdbcType=BIGINT},
       </if>
-      <if test="descs != null" >
-        descs = #{descs,jdbcType=VARCHAR},
-      </if>
-      <if test="time != null" >
-        time = #{time,jdbcType=TIMESTAMP},
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.application.model.entity.Tie" >
-    update tiezi
-    set title = #{title,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=BIGINT},
+  <update id="updateByPrimaryKey" parameterType="com.application.model.entity.Review" >
+    update email
+    set user_id = #{userId,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      likes = #{likes,jdbcType=BIGINT},
       problem_id = #{problemId,jdbcType=BIGINT},
-      descs = #{descs,jdbcType=VARCHAR},
-      time = #{time,jdbcType=TIMESTAMP}
+      title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -32,4 +32,7 @@ public class TieService {
         return collect;
     }
 
+    public void insert(Tie tie) {
+         tieMapper.insert(tie);
+    }
 }

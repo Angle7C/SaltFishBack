@@ -3,10 +3,8 @@ package com.application.mapper;
 import com.application.model.entity.Likes;
 import com.application.model.entity.LikesExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface LikesMapper {
     int countByExample(LikesExample example);
 

@@ -355,73 +355,73 @@ public class TieExample {
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNull() {
-            addCriterion("desc is null");
+        public Criteria andDescsIsNull() {
+            addCriterion("descs is null");
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNotNull() {
-            addCriterion("desc is not null");
+        public Criteria andDescsIsNotNull() {
+            addCriterion("descs is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescEqualTo(String value) {
-            addCriterion("desc =", value, "desc");
+        public Criteria andDescsEqualTo(String value) {
+            addCriterion("descs =", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotEqualTo(String value) {
-            addCriterion("desc <>", value, "desc");
+        public Criteria andDescsNotEqualTo(String value) {
+            addCriterion("descs <>", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThan(String value) {
-            addCriterion("desc >", value, "desc");
+        public Criteria andDescsGreaterThan(String value) {
+            addCriterion("descs >", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThanOrEqualTo(String value) {
-            addCriterion("desc >=", value, "desc");
+        public Criteria andDescsGreaterThanOrEqualTo(String value) {
+            addCriterion("descs >=", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThan(String value) {
-            addCriterion("desc <", value, "desc");
+        public Criteria andDescsLessThan(String value) {
+            addCriterion("descs <", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThanOrEqualTo(String value) {
-            addCriterion("desc <=", value, "desc");
+        public Criteria andDescsLessThanOrEqualTo(String value) {
+            addCriterion("descs <=", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescLike(String value) {
-            addCriterion("desc like", value, "desc");
+        public Criteria andDescsLike(String value) {
+            addCriterion("descs like", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotLike(String value) {
-            addCriterion("desc not like", value, "desc");
+        public Criteria andDescsNotLike(String value) {
+            addCriterion("descs not like", value, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescIn(List<String> values) {
-            addCriterion("desc in", values, "desc");
+        public Criteria andDescsIn(List<String> values) {
+            addCriterion("descs in", values, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotIn(List<String> values) {
-            addCriterion("desc not in", values, "desc");
+        public Criteria andDescsNotIn(List<String> values) {
+            addCriterion("descs not in", values, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescBetween(String value1, String value2) {
-            addCriterion("desc between", value1, value2, "desc");
+        public Criteria andDescsBetween(String value1, String value2) {
+            addCriterion("descs between", value1, value2, "descs");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotBetween(String value1, String value2) {
-            addCriterion("desc not between", value1, value2, "desc");
+        public Criteria andDescsNotBetween(String value1, String value2) {
+            addCriterion("descs not between", value1, value2, "descs");
             return (Criteria) this;
         }
 

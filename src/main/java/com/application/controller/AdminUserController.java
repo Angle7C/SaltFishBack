@@ -38,18 +38,19 @@ public class AdminUserController {
         Assert.isTrue(UserToken.Admin_TOKEN.getMessage().equals(passWord),"密码或账号错误");
         Cookie cookie = new Cookie("userToken",UserToken.Admin_TOKEN.getMessage());
         cookie.setMaxAge(60*60*24);
+        cookie.setPath("/");
         response.addCookie(cookie);
         return new ResultJson().ok("管理员登陆成功");
     }
     @PostMapping("/user")
-    public ResultJson updateUser(HttpServletRequest request,UserDTO userDTO){
+    public ResultJson updateUser(HttpServletRequest request,@RequestBody  UserDTO userDTO){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         User user = userDTO.toEntity();
-        userService.Update(user);
+        userService.UpdateAdmin(user);
         return new ResultJson().ok("修改用户信息成功");
     }
 //    @PostMapping("/user")
-    public ResultJson updateUser(UserDTO userDTO,
+    public ResultJson updateUser(@RequestBody UserDTO userDTO,
                                  HttpServletRequest request,
                                  @RequestPart(value = "file") MultipartFile multipartFile){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
@@ -81,6 +82,18 @@ public class AdminUserController {
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         List<UserDTO> list= userService.selectName(name);
         return new ResultJson().ok("获取用户信息成功",null,list);
+    }
+    @GetMapping("/user")
+    public ResultJson getUser(HttpServletRequest request){
+        Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
+        List<UserDTO> list= userService.findAll();
+        return new ResultJson().ok("获取用户信息成功",null,list);
+    }
+    @GetMapping("/checkuser")
+    public ResultJson checkAdmin(HttpServletRequest request){
+        boolean b = UserTokenUtils.checkAdmin(request.getCookies());
+        Assert.isTrue(b,"管理员没有登录");
+        return new ResultJson().ok("已经登录");
     }
 
 
