@@ -1,4 +1,4 @@
-package com.application.constant.enums;
+package enums;
 
 import lombok.Data;
 import lombok.Getter;

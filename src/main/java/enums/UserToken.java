@@ -1,4 +1,4 @@
-package com.application.constant.enums;
+package enums;
 
 import cn.hutool.crypto.digest.MD5;
 import lombok.Data;

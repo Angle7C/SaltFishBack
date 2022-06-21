@@ -18,12 +18,12 @@ public class AdminProblemController {
     private ProblemService problemService;
     @Autowired
     private UserMapper userMapper;
-    @PutMapping("/problem")
-    public ResultJson updateProblem(@RequestBody ProblemDTO problemDTO, HttpServletRequest request){
-
-    }
-    @DeleteMapping("/problem/{id}")
-    public ResultJson delProblem(@PathVariable("id") Long id, HttpServletRequest request){
-
-    }
+//    @PutMapping("/problem")
+//    public ResultJson updateProblem(@RequestBody ProblemDTO problemDTO, HttpServletRequest request){
+//
+//    }
+//    @DeleteMapping("/problem/{id}")
+//    public ResultJson delProblem(@PathVariable("id") Long id, HttpServletRequest request){
+//
+//    }
 }

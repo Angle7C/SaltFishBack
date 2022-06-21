@@ -1,7 +1,7 @@
 package com.application.utils;
 
 import cn.hutool.core.lang.Assert;
-import com.application.constant.enums.UserToken;
+import enums.UserToken;
 
 import javax.servlet.http.Cookie;
 import javax.validation.constraints.NotNull;

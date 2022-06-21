@@ -2,7 +2,7 @@ package com.application.controller;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.crypto.digest.MD5;
-import com.application.constant.enums.UserToken;
+import enums.UserToken;
 import com.application.model.DTO.UserDTO;
 import com.application.model.ResultJson;
 import com.application.model.entity.User;

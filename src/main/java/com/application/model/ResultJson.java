@@ -1,6 +1,6 @@
 package com.application.model;
 
-import com.application.constant.enums.ErrorEnum;
+import enums.ErrorEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

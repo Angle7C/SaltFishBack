@@ -206,9 +206,11 @@ public RecordDTO runProcess(RecordDTO recordDTO) {
         RecordExample recordExample=new RecordExample();
         recordExample.createCriteria().andUserIdEqualTo(id);
         List<Record> records = recordMapper.selectByExample(recordExample);
-        records.stream()
-                .map(item->new RecordDTO(item,problemMapper.selectByPrimaryKey(item.getProblemId())));
-        return null;
+        List<RecordDTO> collect = records.stream()
+                .map(item -> new RecordDTO(item,
+                        problemMapper.selectByPrimaryKey(item.getProblemId())))
+                .collect(Collectors.toList());
+        return collect;
     }
 //    public List<>
 }

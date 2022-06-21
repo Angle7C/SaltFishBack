@@ -1,14 +1,13 @@
 package com.application.aspect;
 
 import cn.hutool.extra.mail.MailException;
-import com.application.constant.enums.ErrorEnum;
+import enums.ErrorEnum;
 import com.application.model.ResultJson;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 //@RestControllerAdvice
 @Component
