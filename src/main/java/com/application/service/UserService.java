@@ -48,6 +48,7 @@ public class UserService {
         userExample.createCriteria().andTokenEqualTo(user.getToken());
         user.setGmtModified(System.currentTimeMillis());
         User userTemp = userMapper.selectByPrimaryKey(user.getId());
+        if(user.getPassWord()==null)
         user.setPassWord(userTemp.getPassWord());
         user.setRanks(userTemp.getRanks());
         int i=userMapper.updateByExampleSelective(user, userExample);
@@ -155,7 +156,6 @@ public class UserService {
         Assert.notNull(user,"没有这个用户");
         return user;
     }
-
     public List<UserDTO> selectName(String name) {
         UserExample userExample=new UserExample();
         userExample.createCriteria().andUserNameLike(name);
@@ -166,7 +166,6 @@ public class UserService {
                         .collect(Collectors.toList());
         return collect;
     }
-
     public List<UserDTO> findAll() {
         List<User> users = userMapper.selectByExample(new UserExample());
         List<UserDTO> collect = users.stream().map(item -> new UserDTO(item)).collect(Collectors.toList());

@@ -16,7 +16,6 @@ public class WxUser {
     private String country;
     private String headimgurl;
     private List<String> privilege;
-//    private String unionid;
     public static User toUser(User user,WxUser wxUser){
         user.setWxId(wxUser.getOpenid());
         user.setImageUrl(wxUser.getHeadimgurl());
@@ -27,6 +26,7 @@ public class WxUser {
         user.setPassWord(MD5.create().digestHex("123456","UTF-8"));
         user.setGmtCreate(System.currentTimeMillis());
         user.setGmtModified(user.getGmtCreate());;
+        user.setUserName(wxUser.getNickname());
         return user;
     }
 }

@@ -40,7 +40,6 @@ public class ProblemController {
         json.ok("创建问题成功",problem);
         return json;
     }
-
     @GetMapping("problem/{pageSize}/{pageIndex}")
     public ResultJson getProblemList(@PathVariable("pageSize") Integer pageSize,@PathVariable("pageIndex") Integer pageIndex){
         PageInfo<Problem> pageInfo = problemService.allList(pageSize,pageIndex);

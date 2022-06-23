@@ -53,14 +53,15 @@ public class WxService  {
        Assert.isTrue(errcode==0,jsonObject.get("errmsg",String.class));
        String userInfo = HttpUtil.get(postUrl);
        WxUser wxUser = JSONUtil.toBean(userInfo,WxUser.class);
-       UserExample userExample=new UserExample();
-       userExample.createCriteria().andWxIdEqualTo(openId);
-       List<User> users = userMapper.selectByExample(userExample);
-
-        //这个账号没有绑定了
        openId=wxUser.getOpenid();
-       if(users!=null&&users.size()==0){
-           LogUtil.info("微信没有绑定");
+       return bindUser(openId,wxUser);
+    }
+    public User bindUser(String openId,WxUser wxUser){
+        UserExample userExample=new UserExample();
+        userExample.createCriteria().andWxIdEqualTo(openId);
+        List<User> users = userMapper.selectByExample(userExample);
+        if(users!=null&&users.size()==0){
+            LogUtil.info("微信没有绑定");
             User user = new User();
             WxUser.toUser(user,wxUser);
             UserTokenUtils.addToken(openId);
@@ -68,16 +69,14 @@ public class WxService  {
             user.setToken(openId);
             userMapper.insert(user);
             return user;
-       }else{
-           LogUtil.info("微信已经绑定");
+        }else{
+            LogUtil.info("微信已经绑定");
             UserTokenUtils.addToken(openId);
             User user=users.get(0);
             user.setToken(openId);
             userMapper.updateByPrimaryKey(user);
             return users.get(0);
         }
-
-
     }
     public void getWxPng(HttpServletResponse response,String state) {
         ImageUtil.createQRCode2Stream(

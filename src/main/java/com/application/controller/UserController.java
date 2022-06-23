@@ -112,23 +112,29 @@ public class UserController {
         return json;
     }
     @PostMapping("/user")
-    public ResultJson update(UserDTO userDTO,
+    public ResultJson update(@RequestParam("id") Long id,
                               HttpServletRequest request,
                              @RequestPart(value = "file")  MultipartFile multipartFile){
+
         String token = UserTokenUtils.checkUser(request.getCookies());
-        User user = userDTO.toEntity();
-        user.setToken(token);
-        String avatarUrl = GiteeUtil.upload(multipartFile,imagePath,user.getId());
+        String avatarUrl = GiteeUtil.upload(multipartFile,imagePath,id);
         Assert.notNull(avatarUrl,"文件保存失败");
-        LogUtil.debug("传输用户数据：{}",user);
-        LogUtil.debug("文件名称: {}",multipartFile.getOriginalFilename());
+        User user = userService.getUserID(id);
         user.setImageUrl(avatarUrl);
         userService.Update(user);
         ResultJson json = new ResultJson();
-        json.ok("更新用户数据成功",new UserDTO(user));
+        json.ok("更新用户数据成功" , new UserDTO(user));
         return json;
     }
-
+    @PostMapping("/updateuser")
+    public ResultJson updateUser(@RequestBody UserDTO userDTO,HttpServletRequest request){
+        String s = UserTokenUtils.checkUser(request.getCookies());
+        Assert.notNull(s,"没有登录");
+        User user = userDTO.toEntity();
+        user.setToken(s);
+        userService.Update(user);
+        return new ResultJson().ok("修改成功");
+    }
 
     @GetMapping("/getuser")
     public ResultJson getUserMessage(HttpServletRequest request){
