@@ -1,8 +1,11 @@
 package com.application.model.entity;
 
 import cn.hutool.crypto.digest.MD5;
+import cn.hutool.http.HttpUtil;
+import com.application.utils.ImageUtil;
 import lombok.Data;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,9 +19,9 @@ public class WxUser {
     private String country;
     private String headimgurl;
     private List<String> privilege;
-    public static User toUser(User user,WxUser wxUser){
+    public static User toUser(User user,WxUser wxUser,String url){
         user.setWxId(wxUser.getOpenid());
-        user.setImageUrl(wxUser.getHeadimgurl());
+        user.setImageUrl(url);
         user.setToken(UUID.randomUUID().toString());
         user.setUserName(wxUser.getNickname());
         user.setDecription(null);

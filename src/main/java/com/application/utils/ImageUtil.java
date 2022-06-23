@@ -1,16 +1,21 @@
 package com.application.utils;
 
+import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.extra.qrcode.QrCodeException;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
+import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.internal.util.StringUtil;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
 @Slf4j
 public class ImageUtil {
     private static QrConfig initQrConfig() {
@@ -33,4 +38,39 @@ public class ImageUtil {
             log.error("发生错误！ {}！", e.getMessage());
         }
     }
+    public static String getimagestr(String url)
+
+    {//将图片文件转化为字节数组字符串，并对其进行base64编码处理
+
+        String imgfile = url;
+        InputStream in = null;
+        byte[] data = null;
+//读取图片字节数组
+        try
+        {
+            in = new FileInputStream(imgfile);
+
+            data = new byte[in.available()];
+
+            in.read(data);
+
+            in.close();
+
+        }
+        catch (IOException e)
+
+        {
+            throw new IllegalArgumentException("没有这个文件");
+
+        }
+//对字节数组base64编码
+        Base64Encoder encoder = new Base64Encoder();
+        return encoder.encode(data);//返回base64编码过的字节数组字符串
+
+    }
+    public static String urlToImage(String url,String down){
+        HttpUtil.downloadFile(url, down);
+        return  down;
+    }
+
 }

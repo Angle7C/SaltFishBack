@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class UserController {
+
     @Autowired
     private UserService userService;
     @Value("${imagePath}")
@@ -114,7 +115,7 @@ public class UserController {
     @PostMapping("/user")
     public ResultJson update(@RequestParam("id") Long id,
                               HttpServletRequest request,
-                             @RequestPart(value = "file")  MultipartFile multipartFile){
+                             @RequestPart("file") MultipartFile multipartFile){
 
         String token = UserTokenUtils.checkUser(request.getCookies());
         String avatarUrl = GiteeUtil.upload(multipartFile,imagePath,id);

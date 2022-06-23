@@ -51,11 +51,17 @@ public class WeChatController {
        UserDTO userDTO=wxService.getWxAccessToken(code,state);
        WxStateUtil.changeSate(state,userDTO.getId(),TimeUnit.SECONDS.toMillis(300));
         PrintWriter writer = response.getWriter();
-        File file = new File("");
-        response.setCharacterEncoding("UTF-8");
-        OutputStream outputStream = new FileOutputStream(file);
-        Writer writerFile=new OutputStreamWriter(outputStream);
-//        writerFile
+        writer.write("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <img src=\"http://1.15.115.226/img/login_success.png\" style=\"width:100%\">\n" +
+                "</body>\n" +
+                "</html>");
+        writer.close();
+
     }
     @GetMapping("/checkwxuser")
     public ResultJson handleWxEvent(HttpServletRequest request,HttpSession session,HttpServletResponse response){

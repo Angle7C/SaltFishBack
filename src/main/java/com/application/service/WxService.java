@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class WxService  {
@@ -25,7 +27,8 @@ public class WxService  {
     private String secret;
     @Value("${nat}")
     private String nat;
-
+    @Value("${imagePath}")
+    private String image;
     @Autowired
     private UserMapper userMapper;
     private static final String accessTokenUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
@@ -63,11 +66,15 @@ public class WxService  {
         if(users!=null&&users.size()==0){
             LogUtil.info("微信没有绑定");
             User user = new User();
-            WxUser.toUser(user,wxUser);
+            userMapper.insert(user);
+            WxUser.toUser(user,wxUser,image+ File.separator+user.getId()+File.separator+ UUID.randomUUID().toString()+".png");
             UserTokenUtils.addToken(openId);
             user.setWxId(openId);
             user.setToken(openId);
-            userMapper.insert(user);
+
+            ImageUtil.urlToImage(wxUser.getHeadimgurl(),user.getImageUrl());
+            user.setImageUrl(user.getImageUrl());
+            userMapper.updateByPrimaryKey(user);
             return user;
         }else{
             LogUtil.info("微信已经绑定");
