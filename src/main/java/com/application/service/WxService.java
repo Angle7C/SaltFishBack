@@ -71,7 +71,6 @@ public class WxService  {
             UserTokenUtils.addToken(openId);
             user.setWxId(openId);
             user.setToken(openId);
-
             ImageUtil.urlToImage(wxUser.getHeadimgurl(),user.getImageUrl());
             user.setImageUrl(user.getImageUrl());
             userMapper.updateByPrimaryKey(user);

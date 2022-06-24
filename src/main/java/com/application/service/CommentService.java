@@ -65,12 +65,25 @@ public class CommentService {
     public PageInfo<CommentDTO> allList(Integer pageIndex, Integer pageSize,Long id){
         PageHelper.startPage(pageIndex,pageSize);
         CommentExample commentExample=new CommentExample();
-        commentExample.createCriteria().andProblemIdEqualTo(id);
+        commentExample.createCriteria().andProblemIdEqualTo(id).andTypeEqualTo(1);
         List<Comment> comments = commentMapper.selectByExampleWithBLOBs(commentExample);
         List<CommentDTO> collect = comments.stream()
                 .map(item -> new CommentDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
                 .collect(Collectors.toList());
         PageInfo<CommentDTO> pageInfo = new PageInfo<>(collect);
         return pageInfo;
+    }
+
+    public List<CommentDTO> getListUser(Long id) {
+        CommentExample commentExample=new CommentExample();
+        commentExample.createCriteria()
+                .andUserIdEqualTo(id);
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        List<CommentDTO> collect = comments.stream().map(
+                item -> new CommentDTO(item, userMapper.selectByPrimaryKey(item.getUserId()))
+        ).map(item->{item.setContent(problemMapper.selectByPrimaryKey(item.getProblemId()).getTitle());
+            return item;
+        }).collect(Collectors.toList());
+        return collect;
     }
 }

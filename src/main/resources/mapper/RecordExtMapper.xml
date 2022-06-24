@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.application.mapper.RecordExtMapper" >
+    <resultMap id="BaseResultMap" type="com.application.model.entity.Record" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="BIGINT" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="problem_id" property="problemId" jdbcType="BIGINT" />
+        <result column="score" property="score" jdbcType="BIGINT" />
+        <result column="path" property="path" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectDistinctProblem" resultMap="BaseResultMap">
+        select record.* from record,
+                             (
+                                 select problem_id,max(score) as maxsocre
+                                 from record where user_id=#{id}
+                                 GROUP BY problem_id
+                             )as a
+        where record.problem_id=a.problem_id and record.score=a.maxsocre
+    </select>
+</mapper>

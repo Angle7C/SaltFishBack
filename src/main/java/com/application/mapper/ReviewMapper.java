@@ -3,8 +3,10 @@ package com.application.mapper;
 import com.application.model.entity.Review;
 import com.application.model.entity.ReviewExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface ReviewMapper {
     int countByExample(ReviewExample example);
 

@@ -3,8 +3,10 @@ package com.application.mapper;
 import com.application.model.entity.Tie;
 import com.application.model.entity.TieExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface TieMapper {
     int countByExample(TieExample example);
 

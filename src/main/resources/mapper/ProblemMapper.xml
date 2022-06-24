@@ -126,11 +126,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.application.model.entity.Problem" >
-    insert into problem (id, gmt_create, gmt_modified, 
+  <insert id="insert" parameterType="com.application.model.entity.Problem" useGeneratedKeys="true" keyProperty="id">
+    insert into problem ( gmt_create, gmt_modified,
       user_id, title, tag, level, 
       num, description)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
+    values ( #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT},
       #{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tag,jdbcType=BIGINT}, #{level,jdbcType=VARCHAR}, 
       #{num,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
   </insert>

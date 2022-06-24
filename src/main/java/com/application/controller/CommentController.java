@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @Validated
@@ -56,7 +57,11 @@ public class CommentController {
         Page page=new Page(pageInfo.getTotal(),pageSize,pageIndex);
         return new  ResultJson().ok("查询成功",page,pageInfo.getList());
     }
-
+    @GetMapping("/comment/{id}")
+    public ResultJson userForList(@PathVariable("id") Long id){
+        List<CommentDTO> list=commentService.getListUser(id);
+        return new ResultJson().ok("查询成功",null,list);
+    }
 
 
 }

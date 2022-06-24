@@ -18,8 +18,8 @@ public class UserTokenUtils {
         List<Cookie> userToken = Arrays.stream(cookies)
                 .filter(item -> item.getName().equals("userToken"))
                 .collect(Collectors.toList());
-        Assert.isTrue(userToken!=null||userToken.size()!=1,"携带userToken出错");
-         tokenSession.contains(userToken.get(0).getValue());
+        Assert.isTrue(userToken!=null||userToken.size()>=1,"携带userToken出错");
+        tokenSession.contains(userToken.get(0).getValue());
         return userToken.get(0).getValue();
     }
     public static boolean checkUser(@NotNull(message = "没有携带userToken")String token){

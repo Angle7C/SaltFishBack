@@ -84,7 +84,7 @@ public class WeChatController {
         User user = wxService.bindUser(openId, wxUser);
         response.addCookie(new Cookie("userToken",user.getToken()));
 //        UserTokenUtils.addToken(user.getToken());
-        return new ResultJson().ok("微信小程序登录成功");
+        return new ResultJson().ok("微信小程序登录成功",user);
     }
 
 }

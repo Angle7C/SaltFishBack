@@ -36,8 +36,10 @@ public class OtherController {
             return json;
     }
     @PostMapping("/user/signature")
-    public ResultJson changeSignature(String signature,HttpServletRequest request) {
+    public ResultJson changeSignature(@RequestParam("signature") String signature
+                                        ,HttpServletRequest request) {
         String token = UserTokenUtils.checkUser(request.getCookies());
+        Assert.notNull(token,"没有登录");
         User user = userService.checkUser(token);
         user.setDecription(signature);
         userService.UpdateUserID(user);

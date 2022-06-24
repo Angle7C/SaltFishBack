@@ -3,10 +3,10 @@ package com.application.service;
 import com.application.mapper.NoticeMapper;
 import com.application.mapper.ReviewMapper;
 import com.application.mapper.UserMapper;
-import com.application.model.entity.Notice;
-import com.application.model.entity.Review;
-import com.application.model.entity.User;
-import com.application.model.entity.UserExample;
+import com.application.model.DTO.NoticeDTO;
+import com.application.model.DTO.UserDTO;
+import com.application.model.entity.*;
+import jdk.internal.org.objectweb.asm.tree.IincInsnNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+
 @Service
 public class NoticeService {
     @Autowired
@@ -45,5 +47,15 @@ public class NoticeService {
     }
     private void insert(List<Notice> list){
         list.forEach(item->noticeMapper.insert(item));
+    }
+
+    public List<NoticeDTO>  getNotices(Long id) {
+        NoticeExample noticeExample = new NoticeExample();
+        noticeExample.createCriteria().andReciveIdEqualTo(id);
+        List<Notice> notices = noticeMapper.selectByExample(noticeExample);
+        List<NoticeDTO> collect = notices.stream()
+                .map(item -> new NoticeDTO(item))
+                .collect(Collectors.toList());
+        return collect;
     }
 }

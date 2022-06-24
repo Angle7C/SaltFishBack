@@ -3,8 +3,10 @@ package com.application.mapper;
 import com.application.model.entity.Problem;
 import com.application.model.entity.ProblemExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface ProblemMapper {
     int countByExample(ProblemExample example);
 

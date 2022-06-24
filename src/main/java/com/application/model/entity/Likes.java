@@ -8,11 +8,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Likes {
+    private Long id;
+
     private Long userId;
 
     private Long commentId;
 
-    private Long id;
+    private Long emailId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getUserId() {
         return userId;
@@ -30,11 +40,11 @@ public class Likes {
         this.commentId = commentId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getEmailId() {
+        return emailId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmailId(Long emailId) {
+        this.emailId = emailId;
     }
 }

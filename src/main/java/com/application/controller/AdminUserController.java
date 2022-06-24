@@ -49,15 +49,6 @@ public class AdminUserController {
         userService.UpdateAdmin(user);
         return new ResultJson().ok("修改用户信息成功");
     }
-//    @PostMapping("/user")
-    public ResultJson updateUser(@RequestBody UserDTO userDTO,
-                                 HttpServletRequest request,
-                                 @RequestPart(value = "file") MultipartFile multipartFile){
-        Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
-        User user = userDTO.toEntity();
-        userService.Update(user);
-        return new ResultJson().ok("修改用户信息成功");
-    }
     @DeleteMapping("/user/{id}")
     public ResultJson delUser(@PathVariable("id") Long id,HttpServletRequest request){
         boolean b = UserTokenUtils.checkAdmin(request.getCookies());

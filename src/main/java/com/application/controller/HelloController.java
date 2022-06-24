@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 public class HelloController {
     @Autowired
@@ -16,7 +18,9 @@ public class HelloController {
     @Autowired
     private EmailUtil emailUtil;
     @GetMapping("hello")
-    public Object hello(){
+    public Object hello(HttpSession session){
+        System.out.println(session.getId());
+
         return null;
     }
 

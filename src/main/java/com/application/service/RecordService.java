@@ -162,7 +162,7 @@ public RecordDTO runProcess(RecordDTO recordDTO) {
         Assert.isTrue(users.size()==1, "没有这个用户");
         List<Record> records = recordExtMapper.selectDistinctProblem(users.get(0).getId());
         List<RecordDTO> collect = records.stream()
-                .map(item -> new RecordDTO(item).HiddePath())
+                .map(item -> new RecordDTO(item,problemMapper.selectByPrimaryKey(item.getProblemId())).HiddePath())
                 .collect(Collectors.toList());
         return collect;
     }

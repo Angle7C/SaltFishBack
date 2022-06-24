@@ -1,6 +1,7 @@
 package com.application.utils;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.lang.ParameterizedTypeImpl;
 import cn.hutool.http.HttpUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,14 +27,25 @@ public class GiteeUtil {
            if(image.getParentFile().mkdirs()){
                image.getParentFile().mkdirs();
            }
-
         try {
             file.transferTo(image);
             return imagePath;
         } catch (IOException e) {
             return null;
         }
+    }
+    public static String  upload(MultipartFile[] files,String path,Long problemId){
+        String imagePath=null;
+        int i=0;
+        for (MultipartFile file : files) {
+            imagePath=path+ File.separator+problemId.toString()+File.separator+file.getOriginalFilename();
+            try {
+                file.transferTo(new File(imagePath));
+            } catch (IOException e) {
 
+            }
+        }
+        return path+File.separator+problemId.toString()+File.separator;
     }
     public static String  upload(MultipartFile file)  {
         String uploadURL = createUploadURL(file.getOriginalFilename());

@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.application.mapper.LikesMapper" >
   <resultMap id="BaseResultMap" type="com.application.model.entity.Likes" >
-    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="comment_id" property="commentId" jdbcType="BIGINT" />
-    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="email_id" property="emailId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, comment_id, id
+    id, user_id, comment_id, email_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.application.model.entity.LikesExample" >
     select
@@ -85,11 +86,11 @@
     select 
     <include refid="Base_Column_List" />
     from likes
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from likes
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.application.model.entity.LikesExample" >
     delete from likes
@@ -98,33 +99,39 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.application.model.entity.Likes" >
-    insert into likes (user_id, comment_id, id
-      )
-    values (#{userId,jdbcType=BIGINT}, #{commentId,jdbcType=BIGINT}, #{id,jdbcType=BIGINT}
-      )
+    insert into likes (id, user_id, comment_id, 
+      email_id)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{commentId,jdbcType=BIGINT}, 
+      #{emailId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.application.model.entity.Likes" >
     insert into likes
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="userId != null" >
         user_id,
       </if>
       <if test="commentId != null" >
         comment_id,
       </if>
-      <if test="id != null" >
-        id,
+      <if test="emailId != null" >
+        email_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
       </if>
       <if test="commentId != null" >
         #{commentId,jdbcType=BIGINT},
       </if>
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+      <if test="emailId != null" >
+        #{emailId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -137,14 +144,17 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update likes
     <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=BIGINT},
       </if>
       <if test="record.commentId != null" >
         comment_id = #{record.commentId,jdbcType=BIGINT},
       </if>
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="record.emailId != null" >
+        email_id = #{record.emailId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -153,9 +163,10 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update likes
-    set user_id = #{record.userId,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
       comment_id = #{record.commentId,jdbcType=BIGINT},
-      id = #{record.id,jdbcType=BIGINT}
+      email_id = #{record.emailId,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -163,19 +174,23 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.application.model.entity.Likes" >
     update likes
     <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
       <if test="commentId != null" >
         comment_id = #{commentId,jdbcType=BIGINT},
       </if>
-      <if test="id != null" >
-        id = #{id,jdbcType=BIGINT},
+      <if test="emailId != null" >
+        email_id = #{emailId,jdbcType=BIGINT},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.application.model.entity.Likes" >
     update likes
-    set comment_id = #{commentId,jdbcType=BIGINT},
-      id = #{id,jdbcType=BIGINT}
-    where user_id = #{userId,jdbcType=BIGINT}
+    set user_id = #{userId,jdbcType=BIGINT},
+      comment_id = #{commentId,jdbcType=BIGINT},
+      email_id = #{emailId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

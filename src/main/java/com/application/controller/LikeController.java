@@ -20,17 +20,31 @@ public class LikeController {
     @Autowired
     private LikesService likesService;
 
-    @PostMapping("/addLike")
+    @PostMapping("/addlikecomment")
     public ResultJson addLike(@RequestBody LikeDTO likesDTO, HttpServletRequest request){
         String token = UserTokenUtils.checkUser(request.getCookies());
         Assert.notNull(token,"用户未登录");
         boolean b =false;
         if(likesDTO.getId()==null){
             User user=userService.getUser(token);
-            b=likesService.addLike(user.getId(), likesDTO.getCommentId());
+            b=likesService.addLikeComment(user.getId(), likesDTO.getCommentId());
         }else{
-            b=likesService.addLike(likesDTO.getUserId(), likesDTO.getCommentId());
+            b=likesService.addLikeComment(likesDTO.getUserId(), likesDTO.getCommentId());
         }
         return new ResultJson().ok(b?"点赞成功":"取消点赞");
     }
+    @PostMapping("/addlikereview")
+    public ResultJson addLikes(@RequestBody LikeDTO likesDTO,HttpServletRequest request){
+        String token = UserTokenUtils.checkUser(request.getCookies());
+        Assert.notNull(token,"用户未登录");
+        boolean b =false;
+        if(likesDTO.getId()==null){
+            User user=userService.getUser(token);
+            b=likesService.addLikeReview(user.getId(), likesDTO.getReviewId());
+        }else{
+            b=likesService.addLikeReview(likesDTO.getUserId(), likesDTO.getReviewId());
+        }
+        return new ResultJson().ok(b?"点赞成功":"取消点赞");
+    }
+
 }
