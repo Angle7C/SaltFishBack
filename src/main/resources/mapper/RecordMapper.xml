@@ -102,11 +102,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.application.model.entity.Record" >
-    insert into record (id, gmt_create, gmt_modified, 
+  <insert id="insert" parameterType="com.application.model.entity.Record" useGeneratedKeys="true" keyProperty="id">
+    insert into record (gmt_create, gmt_modified,
       user_id, problem_id, score, 
       path, type)
-    values (#{id,jdbcType=BIGINT}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
+    values ( #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT},
       #{userId,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, #{score,jdbcType=BIGINT}, 
       #{path,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
   </insert>

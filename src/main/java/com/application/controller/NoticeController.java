@@ -28,4 +28,5 @@ public class NoticeController {
         List<NoticeDTO> list=noticeService.getNotices(user.getId());
         return new ResultJson().ok("查询通知成功",null,list);
     }
+
 }

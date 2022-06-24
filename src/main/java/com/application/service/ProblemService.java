@@ -44,7 +44,7 @@ public class ProblemService {
         problem.setGmtCreate(problemTemp.getGmtCreate());
         User user = userMapper.selectByPrimaryKey(problem.getUserId());
         Assert.notNull(user,"没有这个上传者");
-        problemMapper.updateByPrimaryKey(problem);
+        problemMapper.updateByPrimaryKeyWithBLOBs(problem);
         return new ProblemDTO(problem,user);
     }
 
@@ -91,9 +91,9 @@ public class ProblemService {
     public PageInfo<ProblemDTO> searchProbelm(String name, String[] tag, String level,Integer pageSize,Integer pageIndex) {
         ProblemExample problemExample=new ProblemExample();
         problemExample.createCriteria()
-                .andTitleLike(name)
-                .andTagEqualTo(ProblemDTO.changTag(tag))
-                .andLevelEqualTo(level);
+                .andTitleLike("%"+name+"%")
+                .andTagLessThan(ProblemDTO.changTag(tag)+999);
+//                .andLevelEqualTo(level);
         List<Problem> problems = problemMapper.selectByExample(problemExample);
         List<ProblemDTO> problemList = problems.stream()
                                                     .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))

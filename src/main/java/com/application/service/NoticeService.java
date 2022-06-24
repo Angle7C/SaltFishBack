@@ -6,7 +6,6 @@ import com.application.mapper.UserMapper;
 import com.application.model.DTO.NoticeDTO;
 import com.application.model.DTO.UserDTO;
 import com.application.model.entity.*;
-import jdk.internal.org.objectweb.asm.tree.IincInsnNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +23,8 @@ public class NoticeService {
     private UserMapper userMapper;
     @Autowired
     private ReviewMapper reviewMapper;
+
+
     @Transactional
     public void sendMessage(Review revice, Matcher matcher) {
         Long userId = revice.getUserId();
@@ -54,7 +55,10 @@ public class NoticeService {
         noticeExample.createCriteria().andReciveIdEqualTo(id);
         List<Notice> notices = noticeMapper.selectByExample(noticeExample);
         List<NoticeDTO> collect = notices.stream()
-                .map(item -> new NoticeDTO(item))
+                .map(item -> {
+                    Review r = reviewMapper.selectByPrimaryKey(item.getEmailId());
+                    return new NoticeDTO(item, r);
+                })
                 .collect(Collectors.toList());
         return collect;
     }

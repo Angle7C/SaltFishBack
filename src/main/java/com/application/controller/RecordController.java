@@ -34,4 +34,5 @@ public class RecordController {
         List<RecordDTO> records = recordService.selectRecord(token);
         return new ResultJson().ok("查询到做过的题解",null,records);
     }
+
 }

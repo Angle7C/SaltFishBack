@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -53,14 +54,14 @@ public class RecordService {
             processBuilder.command("cmd", "/c", "gcc", file, "-o", outPath + File.separator + problemId.toString() + File.separator + "1.exe");
         }
 //        Runtime.getRuntime().exec("cmd /c g++"+fil)
-        System.out.println(outPath);
+        //System.out.println(outPath);
         File errorLog = new File(outPath + "\\log");
         processBuilder.redirectError(errorLog);
         Process start = processBuilder.start();
-        int bool = start.waitFor();
-        System.out.println(bool);
-        Assert.isTrue(bool == 0, "编译失败");
-        return outPath + File.separator + problemId.toString() + File.separator + "1.exe";
+        Integer bool = start.waitFor();
+//        System.out.println(bool);
+//        Assert.isTrue(bool == 0, "编译失败");
+        return bool.toString()+outPath + File.separator + problemId.toString() + File.separator + "1.exe";
     }
 
     private File runProcess(String file, String in, Long time) throws IOException, InterruptedException {
@@ -97,7 +98,7 @@ public class RecordService {
 
     }
 
-    @Transactional
+//    @Transactional
     public RecordDTO addRecord(Long problemId, String userToken, CodeC code) throws IOException, InterruptedException {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andTokenEqualTo(userToken);
@@ -105,14 +106,15 @@ public class RecordService {
         Assert.isTrue(users != null && users.size() == 1, "登录异常");
         Problem problem = problemMapper.selectByPrimaryKey(problemId);
         Assert.notNull(problem, "没有这个问题");
-
+        Integer bool=0;
         File file = code.toFile(inPath, problemId, users.get(0).getId());
         String absolutePath = file.getAbsolutePath();
         String path = exeC(absolutePath, problemId, code);
         User user = users.get(0);
-        Record record = DTOUtil.getNewRecord(user, problem, path);
-
+        Record record = DTOUtil.getNewRecord(user, problem, path.substring(1,path.length()));
         recordMapper.insert(record);
+        bool=Integer.valueOf(path.substring(0,1));
+        Assert.isTrue(bool==0,"编译失败");
         return new RecordDTO(record,
                 new UserDTO(user),
                 new ProblemDTO(userMapper.selectByPrimaryKey(problem.getUserId()), problem));
@@ -134,10 +136,10 @@ public RecordDTO runProcess(RecordDTO recordDTO) {
             LogUtil.error("读入输入输出文件异常", e.getMessage());
             recordDTO.addSocre(false);
             recordDTO.setType(2);
-        }finally {
-            recordMapper.updateByPrimaryKey(recordDTO.toEntity());
+
         }
     }
+    recordMapper.updateByPrimaryKey(recordDTO.toEntity());
     LogUtil.info("完成运行程序");
     return recordDTO;
 

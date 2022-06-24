@@ -1,6 +1,8 @@
 package com.application.model.DTO;
 
 import com.application.model.entity.Notice;
+import com.application.model.entity.Record;
+import com.application.model.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,16 +14,16 @@ public class NoticeDTO {
     private Long id;
     private Long reciveId;
     private Long sendId;
-    private Long emailId;
+    private ReviewDTO reviewDTO;
     private Integer type;
     public Notice toEntity(){
-        return new Notice(id,reciveId,sendId,emailId,type);
+        return new Notice(id,reciveId,sendId,reviewDTO.getId(),type);
     }
-    public NoticeDTO(Notice notice){
-        this.emailId=notice.getEmailId();
+    public NoticeDTO(Notice notice, Review review){
         this.id=notice.getId();
-        this.sendId=notice.getSendId();
-        this.type= notice.getType();;
-        this.reciveId= notice.getId();
+        this.reviewDTO=new ReviewDTO(review);
+        this.sendId= notice.getSendId();
+        this.reciveId= notice.getReciveId();
+        this.type= notice.getType();
     }
 }

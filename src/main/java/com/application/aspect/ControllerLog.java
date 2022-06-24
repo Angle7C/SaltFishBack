@@ -18,9 +18,12 @@ import java.util.Arrays;
 @Aspect
 public class ControllerLog {
     private static  final  Logger logger=LoggerFactory.getLogger("web访问入口日志");
+
+
+    @Pointcut("execution( public String com.application.controller.OtherController.*(..))")
+    public void points(){}
     @Pointcut("execution( public * com.application.controller.*.*(..))")
     public void point(){}
-
     @Before("point()")
     public void entry(JoinPoint joinPoint){
         Signature signature = joinPoint.getSignature();
@@ -30,6 +33,13 @@ public class ControllerLog {
     public void exit(JoinPoint joinPoint,Object returnObject){
         Signature signature = joinPoint.getSignature();
         logger.info("退出方法：{} 织入对象：{} 返回对象：{}", signature.getName(),joinPoint.getTarget().getClass().getName(),returnObject);
+
+    }
+    @Before("points()")
+    public void entrysss(JoinPoint joinPoint){}
+
+    @AfterReturning(value = "points()")
+    public void exitsss(JoinPoint joinPoint){
 
     }
 }

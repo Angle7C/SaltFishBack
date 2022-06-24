@@ -12,12 +12,6 @@
         <result column="type" property="type" jdbcType="INTEGER" />
     </resultMap>
     <select id="selectDistinctProblem" resultMap="BaseResultMap">
-        select record.* from record,
-                             (
-                                 select problem_id,max(score) as maxsocre
-                                 from record where user_id=#{id}
-                                 GROUP BY problem_id
-                             )as a
-        where record.problem_id=a.problem_id and record.score=a.maxsocre
+        select record.* from record where user_id = #{id}
     </select>
 </mapper>

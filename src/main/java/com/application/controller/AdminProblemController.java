@@ -34,12 +34,13 @@ public class AdminProblemController {
     public ResultJson updateProblem(@RequestBody ProblemDTO problemDTO, HttpServletRequest request){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         Problem problem = problemDTO.toEntity();
+        problem.setId(null);
         problemService.create(problem);
         return  new ResultJson().ok("添加问题");
     }
     @PutMapping("/problem/file/{id}")
     public ResultJson publice(@PathVariable("id") Long id,@PathVariable("files") MultipartFile[] files, HttpServletRequest request){
-        Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
+        //Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         GiteeUtil.upload(files,problem,id);
         return new ResultJson().ok("上传测试用例成功");
     }

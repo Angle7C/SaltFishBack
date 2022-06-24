@@ -42,10 +42,11 @@ public class TieController {
         review.setUserId(user.getId());
         Pattern compile = Pattern.compile("(?<=@)[^ ]+");
 //        Pattern compile = Pattern.compile("/[@][^ ]+/");
-        System.out.println(review.getContent());
+//        System.out.println(review.getContent());
+        reviewService.create(review);
         Matcher matcher = compile.matcher(review.getContent());
         noticeService.sendMessage(review,matcher);
-        reviewService.create(review);
+
         return new ResultJson().ok("发送评论成功");
     }
     @GetMapping("/review/{tieId}")

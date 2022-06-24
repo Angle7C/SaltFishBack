@@ -100,11 +100,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.application.model.entity.Review" >
-    insert into email (id, user_id, content, 
+  <insert id="insert" parameterType="com.application.model.entity.Review" useGeneratedKeys="true" keyProperty="id">
+    insert into email ( user_id, content,
       likes, problem_id, title
       )
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+    values ( #{userId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR},
       #{likes,jdbcType=BIGINT}, #{problemId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}
       )
   </insert>
