@@ -19,7 +19,7 @@ public class LikeController {
     private UserService userService;
     @Autowired
     private LikesService likesService;
-
+    //给题解点赞
     @PostMapping("/addlikecomment")
     public ResultJson addLike(@RequestBody LikeDTO likesDTO, HttpServletRequest request){
         String token = UserTokenUtils.checkUser(request.getCookies());
@@ -33,6 +33,7 @@ public class LikeController {
         }
         return new ResultJson().ok(b?"点赞成功":"取消点赞");
     }
+    //给评论点赞
     @PostMapping("/addlikereview")
     public ResultJson addLikes(@RequestBody LikeDTO likesDTO,HttpServletRequest request){
         String token = UserTokenUtils.checkUser(request.getCookies());

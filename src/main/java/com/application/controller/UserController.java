@@ -144,6 +144,12 @@ public class UserController {
         User user=userService.getUser(token);
         return new ResultJson().ok("查询成功",new UserDTO(user));
     }
+    @GetMapping("/getuser/{id}")
+    public ResultJson  getUserId(@PathVariable("id") Long id){
+        User user = userService.getUserID(id);
+        Assert.notNull(user,"没有这个用户");
+        return new ResultJson().ok("查找成功",new UserDTO(user));
+    }
 
 
 }

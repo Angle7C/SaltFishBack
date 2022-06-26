@@ -36,7 +36,6 @@ public class NoticeService {
             }
             UserExample userExample=new UserExample();
             userExample.createCriteria().andUserNameIn(names);
-
             List<User> users = userMapper.selectByExample(userExample);
             List<Notice> notices=new LinkedList<>();
             users.stream().parallel().forEach(item->{

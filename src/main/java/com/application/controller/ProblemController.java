@@ -70,4 +70,9 @@ public class ProblemController {
     public ResultJson getTag(){
         return new ResultJson().ok("查询TAG",null,ProblemDTO.returnTag());
     }
+    @GetMapping("problem")
+    public ResultJson getProblemList(){
+        List<ProblemDTO> problemDTOS = problemService.allListNone();
+        return new ResultJson().ok("所有问题",null,problemDTOS);
+    }
 }

@@ -1,4 +1,4 @@
-package com.application.controller;
+package com.application.constant;
 
 import cn.hutool.core.lang.Assert;
 import com.application.model.DTO.UserDTO;

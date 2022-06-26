@@ -19,7 +19,7 @@ public class JudgeController {
     @Autowired
     private RecordService recordService;
 
-
+    //提交代码并执行
     @PostMapping("/submit/{id}")
     public ResultJson subCompiler(@PathVariable("id") Long id, @RequestBody CodeC code, HttpServletRequest request) {
         String token = UserTokenUtils.checkUser(request.getCookies());
@@ -37,10 +37,10 @@ public class JudgeController {
         }
         return new ResultJson().error(2003L, "服务器异常，请重试", null);
     }
-
-    @PostMapping("getans/{id}")
-    public ResultJson getAns(@PathVariable("id") Long id) {
-        RecordDTO recordDTO = recordService.selectRecord(id);
-        return new ResultJson().ok("查询成功", recordDTO);
-    }
+    //获取答案
+//    @PostMapping("getans/{id}")
+//    public ResultJson getAns(@PathVariable("id") Long id) {
+//        RecordDTO recordDTO = recordService.selectRecord(id);
+//        return new ResultJson().ok("查询成功", recordDTO);
+//    }
 }

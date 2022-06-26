@@ -58,6 +58,7 @@ public class UserService {
     public int UpdateAdmin(User user){
         user.setGmtModified(System.currentTimeMillis());
         User userTemp = userMapper.selectByPrimaryKey(user.getId());
+        user.setGmtCreate(userTemp.getGmtCreate());
         if(user.getPassWord()==null)
         user.setPassWord(userTemp.getPassWord());
         user.setRanks(userTemp.getRanks());
@@ -158,7 +159,7 @@ public class UserService {
     }
     public List<UserDTO> selectName(String name) {
         UserExample userExample=new UserExample();
-        userExample.createCriteria().andUserNameLike(name);
+        userExample.createCriteria().andUserNameLike("%"+name+"%");
         List<User> users = userMapper.selectByExample(userExample);
         List<UserDTO> collect =
                 users.stream()

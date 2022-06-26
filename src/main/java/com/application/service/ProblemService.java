@@ -47,11 +47,9 @@ public class ProblemService {
         problemMapper.updateByPrimaryKeyWithBLOBs(problem);
         return new ProblemDTO(problem,user);
     }
-
     public PageInfo allList(Integer pageSize,Integer pageIndex) {
         PageHelper.startPage(pageIndex,pageSize);
         ProblemExample problemExample=new ProblemExample();
-
         List<Problem> problems = problemMapper.selectByExample(problemExample);
         PageInfo<Problem> problemPageInfo = new PageInfo<>(problems);
         return problemPageInfo;
@@ -91,15 +89,25 @@ public class ProblemService {
     public PageInfo<ProblemDTO> searchProbelm(String name, String[] tag, String level,Integer pageSize,Integer pageIndex) {
         ProblemExample problemExample=new ProblemExample();
         problemExample.createCriteria()
-                .andTitleLike("%"+name+"%")
-                .andTagLessThan(ProblemDTO.changTag(tag)+999);
-//                .andLevelEqualTo(level);
+                .andTitleLike("%"+name+"%");
+        Long aLong = ProblemDTO.changTag(tag);
+        //                .andTagLessThan(ProblemDTO.changTag(tag)+999);
         List<Problem> problems = problemMapper.selectByExample(problemExample);
         List<ProblemDTO> problemList = problems.stream()
                                                     .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
+                                                    .filter(item->(ProblemDTO.changTag(item.getTag())&aLong)>0)
                                                     .collect(Collectors.toList());
         PageHelper.startPage(pageIndex,pageSize);
         PageInfo<ProblemDTO> pageInfo = new PageInfo<>(problemList);
         return pageInfo;
+    }
+
+    public List<ProblemDTO> allListNone() {
+        ProblemExample problemExample=new ProblemExample();
+        List<Problem> problems = problemMapper.selectByExample(problemExample);
+        List<ProblemDTO> collect = problems.stream()
+                .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
+                .collect(Collectors.toList());
+        return collect;
     }
 }

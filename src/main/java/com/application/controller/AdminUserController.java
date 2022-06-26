@@ -28,6 +28,7 @@ public class AdminUserController {
     private ProblemService problemService;
     @Autowired
     private RecordService recordService;
+    //管理员登录
     @PostMapping("/login")
     public ResultJson loginAdmin(@RequestBody  UserDTO userDTO, HttpServletResponse response){
         String name = userDTO.getName();
@@ -42,6 +43,7 @@ public class AdminUserController {
         response.addCookie(cookie);
         return new ResultJson().ok("管理员登陆成功");
     }
+    //修改用户信息
     @PostMapping("/user")
     public ResultJson updateUser(HttpServletRequest request,@RequestBody  UserDTO userDTO){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
@@ -49,6 +51,7 @@ public class AdminUserController {
         userService.UpdateAdmin(user);
         return new ResultJson().ok("修改用户信息成功");
     }
+    //删除用户
     @DeleteMapping("/user/{id}")
     public ResultJson delUser(@PathVariable("id") Long id,HttpServletRequest request){
         boolean b = UserTokenUtils.checkAdmin(request.getCookies());
@@ -56,30 +59,35 @@ public class AdminUserController {
         User user=userService.delete(id);
         return new ResultJson().ok("删除成功");
     }
+    //获取用户的基本信息
     @GetMapping("/user/{id}")
     public ResultJson getUser(@PathVariable("id") Long id,HttpServletRequest request){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         User user=userService.getUserID(id);
         return new ResultJson().ok("获取用户信息成功",new UserDTO(user));
     }
+    //新增一个用户
     @PutMapping("/user")
     public ResultJson addUser(@RequestBody UserDTO userDTO,HttpServletRequest request){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         User user = userService.create(userDTO.toEntity());
         return new ResultJson<>().ok("添加一个新用户成功",new UserDTO(user));
     }
+    //用户名查询
     @GetMapping("/user/{name}")
     public ResultJson getUser(@PathVariable("name") String name,HttpServletRequest request){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         List<UserDTO> list= userService.selectName(name);
         return new ResultJson().ok("获取用户信息成功",null,list);
     }
+    //获取所有用户
     @GetMapping("/user")
     public ResultJson getUser(HttpServletRequest request){
         Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         List<UserDTO> list= userService.findAll();
         return new ResultJson().ok("获取用户信息成功",null,list);
     }
+    //检查管理员登录
     @GetMapping("/checkuser")
     public ResultJson checkAdmin(HttpServletRequest request){
         boolean b = UserTokenUtils.checkAdmin(request.getCookies());

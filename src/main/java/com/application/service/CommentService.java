@@ -5,10 +5,7 @@ import com.application.mapper.CommentMapper;
 import com.application.mapper.ProblemMapper;
 import com.application.mapper.UserMapper;
 import com.application.model.DTO.CommentDTO;
-import com.application.model.entity.Comment;
-import com.application.model.entity.CommentExample;
-import com.application.model.entity.User;
-import com.application.model.entity.UserExample;
+import com.application.model.entity.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +71,19 @@ public class CommentService {
         return pageInfo;
     }
 
-    public List<CommentDTO> getListUser(Long id) {
+    public List<CommentDTO> getListProblem(Long id) {
+        CommentExample commentExample=new CommentExample();
+        commentExample.createCriteria()
+                .andProblemIdEqualTo(id);
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        List<CommentDTO> collect = comments.stream().map(
+                item -> new CommentDTO(item, userMapper.selectByPrimaryKey(item.getUserId()))
+        ).map(item->{item.setContent(problemMapper.selectByPrimaryKey(item.getProblemId()).getTitle());
+            return item;
+        }).collect(Collectors.toList());
+        return collect;
+
+    }    public List<CommentDTO> getListUser(Long id) {
         CommentExample commentExample=new CommentExample();
         commentExample.createCriteria()
                 .andUserIdEqualTo(id);
@@ -85,5 +94,15 @@ public class CommentService {
             return item;
         }).collect(Collectors.toList());
         return collect;
+    }
+
+    public Comment getProblem(Long userId, Long problemId) {
+        CommentExample commentExample=new CommentExample();
+        commentExample.createCriteria().andTypeEqualTo(1)
+                .andProblemIdEqualTo(problemId)
+                .andUserIdEqualTo(userId);
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        Assert.isTrue(comments.size()>0,"没有这个题解");
+        return comments.get(0);
     }
 }

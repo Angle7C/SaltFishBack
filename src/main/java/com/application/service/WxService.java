@@ -11,9 +11,12 @@ import com.application.model.entity.WxUser;
 import com.application.utils.ImageUtil;
 import com.application.utils.LogUtil;
 import com.application.utils.UserTokenUtils;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.List;
@@ -59,6 +62,7 @@ public class WxService  {
        openId=wxUser.getOpenid();
        return bindUser(openId,wxUser);
     }
+    @Transactional
     public User bindUser(String openId,WxUser wxUser){
         UserExample userExample=new UserExample();
         userExample.createCriteria().andWxIdEqualTo(openId);

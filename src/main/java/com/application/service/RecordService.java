@@ -112,6 +112,8 @@ public class RecordService {
         String path = exeC(absolutePath, problemId, code);
         User user = users.get(0);
         Record record = DTOUtil.getNewRecord(user, problem, path.substring(1,path.length()));
+        record.setGmtCreate(System.currentTimeMillis());
+        record.setGmtModified(record.getGmtCreate());
         recordMapper.insert(record);
         bool=Integer.valueOf(path.substring(0,1));
         Assert.isTrue(bool==0,"编译失败");

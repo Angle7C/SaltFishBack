@@ -44,11 +44,12 @@ public class AdminProblemController {
         GiteeUtil.upload(files,problem,id);
         return new ResultJson().ok("上传测试用例成功");
     }
-    @DeleteMapping("/problem/{id}")
+    @GetMapping("/problem/{id}")
     public ResultJson delProblem(@PathVariable("id") Long id, HttpServletRequest request){
-        Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
+//        Assert.isTrue(UserTokenUtils.checkAdmin(request.getCookies()),"管理员没有登陆");
         List<Problem> problem = problemService.getProblem(id);
-        return new ResultJson().ok("特定问题查询成功");
+        Assert.isTrue(problem.size()>0,"找不到问题");
+        return new ResultJson().ok("特定问题查询成功",problem.get(0));
     }
     @GetMapping("/problem")
     public ResultJson getAllProblem(HttpServletRequest request){

@@ -20,7 +20,7 @@ public class ControllerLog {
     private static  final  Logger logger=LoggerFactory.getLogger("web访问入口日志");
 
 
-    @Pointcut("execution( public String com.application.controller.OtherController.*(..))")
+    @Pointcut("execution( public String com.application.constant.OtherController.*(..))")
     public void points(){}
     @Pointcut("execution( public * com.application.controller.*.*(..))")
     public void point(){}

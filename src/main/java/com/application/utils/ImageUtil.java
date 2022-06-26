@@ -6,6 +6,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.extra.qrcode.QrCodeException;
 import cn.hutool.extra.qrcode.QrCodeUtil;
 import cn.hutool.extra.qrcode.QrConfig;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.internal.util.StringUtil;
@@ -69,7 +70,11 @@ public class ImageUtil {
 
     }
     public static String urlToImage(String url,String down){
-        HttpUtil.downloadFile(url, down);
+        HttpResponse execute = HttpUtil.createGet(url)
+                .timeout(-1).execute();
+        execute.writeBody(down);
+//        HttpUtil.downloadFile(url, down);
+
         return  down;
     }
 

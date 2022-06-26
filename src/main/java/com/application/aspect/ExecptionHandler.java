@@ -25,7 +25,6 @@ public class ExecptionHandler {
     public ResultJson argumentHandle(IllegalArgumentException e){
         ResultJson json=new ResultJson();
         logger.error("参数异常  异常消息；{}",e.getMessage());
-//        ResultJson json=new ResultJson();
         json.error(2001L,e.getMessage());
         return json;
     }

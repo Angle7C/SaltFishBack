@@ -33,8 +33,10 @@ public class ProblemDTO {
         problem.setTag(changTag(tag));
         problem.setTitle(title);
         problem.setDescription(description);
-        if (userDTO!=null)problem.setUserId(userDTO.getId());
-        else problem.setUserId(2L);
+        if (userDTO!=null)
+            problem.setUserId(userDTO.getId());
+        else
+            problem.setUserId(2L);
         problem.setId(id);
         problem.setNum(num);
         return problem;
