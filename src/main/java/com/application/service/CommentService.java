@@ -33,6 +33,7 @@ public class CommentService {
         List<User> userList= userMapper.selectByExample(userExample);
         Assert.isTrue(userList!=null&&userList.size()==1,"没有上传者");
         User user = userList.get(0);
+        comment.setUserId(user.getId());
         commentMapper.insert(comment);
         return new CommentDTO(comment,user);
     }

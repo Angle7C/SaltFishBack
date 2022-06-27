@@ -33,7 +33,7 @@ public class CommentController {
            Assert.notNull(token,"没有登录");
            Assert.notNull(commentDTO,"传输数据异常");
            Comment comment = commentDTO.toEntity();
-           comment.setType(0);
+           comment.setType(1);
            commentDTO = commentService.pushComment(comment, token);
            return json.ok("发表题解成功",commentDTO);
     }
