@@ -90,7 +90,8 @@ public class ProblemService {
         ProblemExample problemExample=new ProblemExample();
         problemExample.createCriteria()
                 .andTitleLike("%"+name+"%");
-        Long aLong = ProblemDTO.changTag(tag);
+        Long aLong = (ProblemDTO.changTag(tag)==0?Long.MAX_VALUE:ProblemDTO.changTag(tag));
+
         //                .andTagLessThan(ProblemDTO.changTag(tag)+999);
         List<Problem> problems = problemMapper.selectByExample(problemExample);
         List<ProblemDTO> problemList = problems.stream()
