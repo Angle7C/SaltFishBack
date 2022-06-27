@@ -94,8 +94,8 @@ public class ProblemService {
         //                .andTagLessThan(ProblemDTO.changTag(tag)+999);
         List<Problem> problems = problemMapper.selectByExample(problemExample);
         List<ProblemDTO> problemList = problems.stream()
+                                                    .filter(item->( item.getTag() & aLong )>0)
                                                     .map(item -> new ProblemDTO(item, userMapper.selectByPrimaryKey(item.getUserId())))
-                                                    .filter(item->(ProblemDTO.changTag(item.getTag())&aLong)>0)
                                                     .collect(Collectors.toList());
         PageHelper.startPage(pageIndex,pageSize);
         PageInfo<ProblemDTO> pageInfo = new PageInfo<>(problemList);

@@ -31,7 +31,7 @@ public class LikeController {
         }else{
             b=likesService.addLikeComment(likesDTO.getUserId(), likesDTO.getCommentId());
         }
-        return new ResultJson().ok(b?"点赞成功":"取消点赞");
+        return new ResultJson().ok(b?"点赞成功":"取消点赞",b);
     }
     //给评论点赞
     @PostMapping("/addlikereview")

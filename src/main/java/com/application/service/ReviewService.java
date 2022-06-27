@@ -61,4 +61,13 @@ public class ReviewService {
         reviewExample.createCriteria().andIdIn(list);
         reviewMapper.deleteByExample(reviewExample);
     }
+
+    public List<TieDTO> selectByFor(Long problemId) {
+        TieExample tieExample=new TieExample();
+        tieExample.createCriteria().andProblemIdEqualTo(problemId);
+        List<Tie> ties = tieMapper.selectByExample(tieExample);
+        List<TieDTO> collect = ties.stream().map(item ->
+            new TieDTO(item, userMapper.selectByPrimaryKey(item.getUserId()))).collect(Collectors.toList());
+        return collect;
+    }
 }

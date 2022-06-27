@@ -76,5 +76,12 @@ public class TieController {
         return new ResultJson().ok("成功");
     }
 
+    @GetMapping("/Tizi/{problemId}")
+    public ResultJson getTizi(@PathVariable("problemId") Long problemId){
+
+         List<TieDTO> list= reviewService.selectByFor(problemId);
+        return new ResultJson().ok("查找帖子下的评论成功",null,list);
+    }
+
 
 }

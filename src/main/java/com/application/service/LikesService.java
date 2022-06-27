@@ -1,10 +1,13 @@
 package com.application.service;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.application.mapper.CommentMapper;
 import com.application.mapper.LikesMapper;
 import com.application.mapper.ReviewMapper;
 import com.application.model.entity.*;
+import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +29,7 @@ public class LikesService {
         List<Likes> likes = likesMapper.selectByExample(likesExample);
         if(likes.size()==1){
             Likes like = likes.get(0);
-            likesMapper.deleteByPrimaryKey(like.getUserId());
+            likesMapper.deleteByPrimaryKey(like.getId());
             Comment comment = commentMapper.selectByPrimaryKey(like.getCommentId());
             comment.setLikess(comment.getLikess()-1);
             commentMapper.updateByPrimaryKey(comment);
@@ -51,6 +54,7 @@ public class LikesService {
             Review review = reviewMapper.selectByPrimaryKey(like.getEmailId());
             review.setLikes(review.getLikes()-1);
             reviewMapper.updateByPrimaryKey(review);
+//            FileUtil.
             return false;
         }else{
             Likes like = new Likes(null,userId, null,reviewId);
